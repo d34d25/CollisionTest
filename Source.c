@@ -3,7 +3,10 @@
 
 int player_x, player_y, player_width, player_height;
 int player_x_velocity, player_y_velocity;
+bool player_can_jump;
 
+const int GRAVITY = 1;
+const int TERMINAL_VELOCITY = 7;
 
 void movePlayer();
 
@@ -12,16 +15,16 @@ void movePlayer();
 
 int map[ROWS][COL] = {0,0,0,0,0,0,0,0,0,0,0,0,
                       0,0,1,1,1,1,1,1,0,0,0,0,
-                      0,0,1,0,1,1,1,1,0,0,0,0, 
+                      0,0,1,0,1,1,1,1,0,0,0,1, 
                       0,0,1,0,0,1,1,1,0,0,0,0, 
-                      0,0,1,0,0,0,1,1,0,0,0,0, 
+                      0,0,1,0,0,0,1,1,1,0,0,0, 
+                      0,0,0,0,0,0,0,0,0,1,0,0,
                       0,0,0,0,0,0,0,0,0,0,0,0,
                       0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,0,0,0,1,
+                      0,0,0,0,0,0,0,0,0,0,1,0,
+                      0,0,0,0,0,0,0,0,0,0,1,0,
+                      0,0,0,0,0,0,0,0,0,1,0,0,
                       0,0,0,0,0,0,1,1,1,0,0,0,
                       0,0,0,0,0,0,0,0,0,0,0,0,
                       0,0,0,0,0,0,0,0,0,1,0,0,
@@ -45,6 +48,7 @@ int main()
 
     player_x = screenWidth * 0.1; player_y = screenHeight - 200; player_width = 25; player_height = 35;
     player_x_velocity = 0; player_y_velocity = 0;
+    player_can_jump = false;
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -55,19 +59,30 @@ int main()
         // Update
         //----------------------------------------------------------------------------------
 
+        int map_x, map_y;
+        int collision_tile_y = 0;
+
         bool collision_x_detected = false;
         bool collision_y_detected = false;
+        bool collision_with_frame_y = false;
 
         movePlayer(); // this has to be first
+
+        player_y_velocity += GRAVITY;
+        if (player_y_velocity > TERMINAL_VELOCITY)
+        {
+            player_y_velocity = TERMINAL_VELOCITY;
+        }
+
 
         //collision detection
         for (int i = 0; i < ROWS; i++) 
         {
             for (int j = 0; j < COL; j++)
             {
-                int map_x = j * tileSize;
+                map_x = j * tileSize;
 
-                int map_y = i * tileSize;
+                map_y = i * tileSize;
 
                 if (map[i][j] == 1)
                 {
@@ -85,6 +100,7 @@ int main()
                         player_y + player_y_velocity < map_y + tileSize)
                     {
                         collision_y_detected = true;
+                        collision_tile_y = map_y;
                     }
                 }
             }
@@ -97,7 +113,7 @@ int main()
 
         if (player_y + player_y_velocity < 0 || player_y + player_height + player_y_velocity > screenHeight)
         {
-            collision_y_detected = true;
+            collision_with_frame_y = true;
         }
 
         //collision resolution
@@ -108,10 +124,32 @@ int main()
 
         if (collision_y_detected)
         {
-            player_y_velocity = 0;
+            if (player_y_velocity > 0)
+            {
+                player_can_jump = true;
+                player_y_velocity = 0;
+                player_y = collision_tile_y - player_height;
+            }
+            else if (player_y_velocity < 0)
+            {
+                player_y_velocity = 0;
+                player_y = collision_tile_y + tileSize;
+            }
         }
 
-
+        if (collision_with_frame_y)
+        {
+            if (player_y_velocity > 0)
+            {
+                player_can_jump = true;
+                player_y_velocity = 0;
+                player_y = screenHeight - player_height;
+            }
+            else if (player_y_velocity < 0)
+            {
+                player_y_velocity = 0;
+            }
+        }
 
         //this has to be last for the collisions to work correctly
         player_x += player_x_velocity;
@@ -168,18 +206,13 @@ void movePlayer()
         player_x_velocity = 0;
     }
 
-    if (IsKeyDown(KEY_DOWN))
+    if (IsKeyDown(KEY_Z) && player_can_jump)
     {
-        player_y_velocity = 5;
+        player_y_velocity = -GRAVITY -15;
+        player_can_jump = false;
+        
     }
-    else if (IsKeyDown(KEY_UP))
-    {
-        player_y_velocity = -5;
-    }
-    else
-    {
-        player_y_velocity = 0;
-    }
+    
 }
 
 /*Estructura para una correcta detección y resolución de colisiones :
