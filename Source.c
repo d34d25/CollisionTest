@@ -6,28 +6,33 @@ int player_x_velocity, player_y_velocity;
 bool player_can_jump;
 
 const int GRAVITY = 1;
-const int TERMINAL_VELOCITY = 7;
+const int TERMINAL_VELOCITY = 9;
 
 void movePlayer();
 
+int map_x, map_y;
 #define ROWS 18
 #define COL 12
 
+void MapMod();
+
+int mouse_tile_x, mouse_tile_y, tile_distance_x, tile_distance_y;
+
 int map[ROWS][COL] = {0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,1,1,1,1,1,1,0,0,0,0,
-                      0,0,1,0,1,1,1,1,0,0,0,1, 
-                      0,0,1,0,0,1,1,1,0,0,0,0, 
-                      0,0,1,0,0,0,1,1,1,0,0,0, 
+                      0,0,0,0,0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,0,0,0,1, 
+                      0,0,0,0,0,0,0,0,0,0,0,0, 
+                      0,0,1,1,1,1,1,1,1,0,0,0, 
                       0,0,0,0,0,0,0,0,0,1,0,0,
                       0,0,0,0,0,0,0,0,0,0,0,0,
                       0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,0,0,1,
-                      0,0,0,0,0,0,0,0,0,0,1,0,
-                      0,0,0,0,0,0,0,0,0,0,1,0,
-                      0,0,0,0,0,0,0,0,0,1,0,0,
-                      0,0,0,0,0,0,1,1,1,0,0,0,
                       0,0,0,0,0,0,0,0,0,0,0,0,
-                      0,0,0,0,0,0,0,0,0,1,0,0,
+                      0,0,0,0,0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,0,0,0,0,
+                      0,0,0,0,0,0,0,0,0,0,0,0,
+                      0,0,0,1,0,0,0,0,0,0,0,0,
                       1,1,1,1,1,1,1,1,1,1,1,1,
                       1,1,1,1,1,1,1,1,1,1,1,1,
                       1,1,1,1,1,1,1,1,1,1,1,1 };
@@ -39,8 +44,8 @@ int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenWidth = COL * tileSize;
+    const int screenHeight = ROWS * tileSize;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
@@ -59,7 +64,7 @@ int main()
         // Update
         //----------------------------------------------------------------------------------
 
-        int map_x, map_y;
+        
         int collision_tile_y = 0;
 
         bool collision_x_detected = false;
@@ -74,6 +79,7 @@ int main()
             player_y_velocity = TERMINAL_VELOCITY;
         }
 
+        MapMod();
 
         //collision detection
         for (int i = 0; i < ROWS; i++) 
@@ -168,14 +174,17 @@ int main()
             {
                 if (map[i][j] == 1)
                 {
-                    DrawRectangle(j * tileSize, i * tileSize, tileSize, tileSize, BLACK);
+                    DrawRectangle(j * tileSize, i * tileSize, tileSize, tileSize, DARKGREEN);
                 }
                 else
                 {
-                    DrawRectangle(j * tileSize, i * tileSize, tileSize, tileSize, LIGHTGRAY);
+                    DrawRectangle(j * tileSize, i * tileSize, tileSize, tileSize, DARKBLUE);
                 }
             }
         }
+
+        DrawText(TextFormat("Mouse Tile Position: [%d, %d]", mouse_tile_x, mouse_tile_y), 10, 10, 20, RAYWHITE);
+        DrawText(TextFormat("Distance in Tiles: [%d, %d]", tile_distance_x, tile_distance_y), 10, 40, 20, RAYWHITE);
 
         DrawRectangle(player_x, player_y, player_width, player_height, RED); //draws player
 
@@ -193,11 +202,11 @@ int main()
 
 void movePlayer()
 {
-    if (IsKeyDown(KEY_RIGHT))
+    if (IsKeyDown(KEY_D))
     {
         player_x_velocity = 5;
     }
-    else if (IsKeyDown(KEY_LEFT))
+    else if (IsKeyDown(KEY_A))
     {
         player_x_velocity = -5;
     }
@@ -206,14 +215,44 @@ void movePlayer()
         player_x_velocity = 0;
     }
 
-    if (IsKeyDown(KEY_Z) && player_can_jump)
+    if (IsKeyDown(KEY_SPACE) && player_can_jump)
     {
-        player_y_velocity = -GRAVITY -15;
+        player_y_velocity = -GRAVITY -10;
         player_can_jump = false;
         
     }
     
 }
+
+void MapMod()
+{
+    Vector2 mousePosition = GetMousePosition();
+    int player_tile_x = player_x / tileSize;
+    int player_tile_y = player_y / tileSize;
+    mouse_tile_x = mousePosition.x / tileSize;
+    mouse_tile_y = mousePosition.y / tileSize;
+
+    tile_distance_x = mouse_tile_x - player_tile_x;
+    tile_distance_y = mouse_tile_y - player_tile_y;
+
+    bool is_within_distance = (tile_distance_x >= -3 && tile_distance_x <= 3) && (tile_distance_y >= -3 && tile_distance_y <= 3);
+
+    if (is_within_distance)
+    {
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 1)
+        {
+            map[mouse_tile_y][mouse_tile_x] = 0;
+        }
+        else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0)
+        {
+            map[mouse_tile_y][mouse_tile_x] = 1;
+        }
+    }
+
+}
+
+
+
 
 /*Estructura para una correcta detección y resolución de colisiones :
     
