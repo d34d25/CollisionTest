@@ -1,0 +1,5 @@
+﻿  Map.c
+E:\C++ projects\CollisionTesting\CollisionTesting\Map.c(39,27): warning C4013: 'abs' undefined; assuming extern returning int
+  CollisionTesting.vcxproj -> E:\C++ projects\CollisionTesting\x64\Debug\CollisionTesting.exe
+  "pwsh.exe" no se reconoce como un comando interno o externo,
+  programa o archivo por lotes ejecutable.
