@@ -5,7 +5,7 @@
 #include "raylib.h"
 
 
-#define BLOCK_COUNT 11
+#define BLOCK_COUNT 17
 
 extern struct Color block_list[BLOCK_COUNT];
 extern const char* color_names[BLOCK_COUNT];

@@ -12,8 +12,18 @@ int main()
    // const int screenWidth = COL * tileSize;
    // const int screenHeight = ROWS * tileSize;
 
-    const int screenWidth = 800;
-    const int screenHeight = 600;
+#define FPS_COUNT 3
+
+    int fps_index = 1;
+
+    const int fps[FPS_COUNT] = {
+        30,
+        60,
+        144
+    };
+
+    const int screenWidth = 1200;
+    const int screenHeight = 800;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     
@@ -34,14 +44,28 @@ int main()
     int maxCameraX = COL * tileSize - GetScreenWidth();
     int maxCameraY = ROWS * tileSize - GetScreenHeight();
 
-
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(fps[fps_index]);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         // Update
+        
+        if (IsKeyPressed(KEY_F))
+        {
+            if (fps_index < FPS_COUNT)
+            {
+                fps_index++;
+            }
+            if (fps_index >= FPS_COUNT)
+            {
+                fps_index = 0;
+            }
+            
+            SetTargetFPS(fps[fps_index]);
+        }
+
         //----------------------------------------------------------------------------------   
         camera.offset = (Vector2){ screenWidth / 2.0f, screenHeight - screenHeight / 2.0f };
         camera.target.x = player_x + player_width / 2;
@@ -198,7 +222,11 @@ int main()
                 if (i >= 0 && i < ROWS && j >= 0 && j < COL)
                 {
                     int block_id = map[i][j];
-                    DrawRectangle(j* tileSize, i* tileSize, tileSize, tileSize, block_list[block_id]);
+                    if (map[i][j] != 0)
+                    {
+                        DrawRectangle(j* tileSize, i* tileSize, tileSize, tileSize, block_list[block_id]);
+                    }
+                    
                 }  
             }
         }
@@ -213,6 +241,9 @@ int main()
 
         DrawText(TextFormat("player_x: %d", player_x/tileSize), 10, 60, 20, WHITE);
         DrawText(TextFormat("player_y: %d", player_y/tileSize), 10, 80, 20, WHITE);
+
+        DrawFPS(screenWidth - 100, 0);
+        DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 100, 20, WHITE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

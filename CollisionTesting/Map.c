@@ -19,7 +19,13 @@ const char* color_names[BLOCK_COUNT] = {
     "GOLD",
     "BLUE",
     "PINK",
-    "WHITE"
+    "WHITE",
+    "RED",
+    "BLACK",
+    "YELLOW",
+    "PURPLE",
+    "DARKPURPLE",
+    "ORANGE"
 };
 
 void InitializeBlocks()
@@ -35,6 +41,12 @@ void InitializeBlocks()
     block_list[8] = BLUE;
     block_list[9] = PINK;
     block_list[10] = WHITE;
+    block_list[11] = RED;
+    block_list[12] = BLACK;
+    block_list[13] = YELLOW;
+    block_list[14] = PURPLE;
+    block_list[15] = DARKPURPLE;
+    block_list[16] = ORANGE;
 }
 
 void MapGen() {
@@ -65,14 +77,17 @@ void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
     Vector2 worldMousePosition = GetScreenToWorld2D(mousePosition, camera);
 
     int player_tile_x = (playerX / tileSize);
-    int player_tile_y = (playerY / tileSize);
+    int player_tile_y_top = ((playerY - playrH) / tileSize);
+    int player_tile_y_bottom = ((playerY + playrH) / tileSize);
 
     int mouse_tile_x = (int)(worldMousePosition.x / tileSize);
     int mouse_tile_y = (int)(worldMousePosition.y / tileSize);
 
     int tile_distance_x = abs(mouse_tile_x - player_tile_x);
-    int tile_distance_y = abs(mouse_tile_y - player_tile_y);
-    bool is_within_distance = (tile_distance_x <= 3 && tile_distance_y <= 3);
+    int tile_distance_y_top = abs(mouse_tile_y - player_tile_y_top);
+    int tile_distance_y_bottom = abs(mouse_tile_y - player_tile_y_bottom);
+
+    bool is_within_distance = ((tile_distance_x <= 3 && tile_distance_y_top <= 2) || (tile_distance_x <= 3 && tile_distance_y_bottom <=2));
 
     int wheelMove = GetMouseWheelMove();
     current_index += wheelMove;
