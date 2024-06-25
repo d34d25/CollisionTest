@@ -1,7 +1,7 @@
 #include "player.h"
 
-int player_x, player_y, player_width, player_height;
-int player_x_velocity, player_y_velocity;
+int player_x = 0, player_y = 0, player_width = 0, player_height = 0;
+int player_x_velocity = 0 , player_y_velocity = 0;
 bool player_can_jump;
 
 const int GRAVITY = 1;

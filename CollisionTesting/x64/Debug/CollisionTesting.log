@@ -1,17 +1,4 @@
-﻿  Map.c
-E:\C++ projects\CollisionTesting\CollisionTesting\Map.c(74,27): warning C4013: 'abs' undefined; assuming extern returning int
-E:\C++ projects\CollisionTesting\CollisionTesting\Map.c(78,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  Source.c
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(24,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(30,41): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(30,70): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(47,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(48,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(50,63): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(51,64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(52,63): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(53,66): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+﻿  Player.c
   CollisionTesting.vcxproj -> E:\C++ projects\CollisionTesting\x64\Debug\CollisionTesting.exe
   "pwsh.exe" no se reconoce como un comando interno o externo,
   programa o archivo por lotes ejecutable.

@@ -30,9 +30,6 @@
     <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Blocks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.c">
@@ -42,9 +39,6 @@
       <Filter>Source Files\Playable</Filter>
     </ClCompile>
     <ClCompile Include="Map.c">
-      <Filter>Source Files\Environment</Filter>
-    </ClCompile>
-    <ClCompile Include="Blocks.c">
       <Filter>Source Files\Environment</Filter>
     </ClCompile>
   </ItemGroup>

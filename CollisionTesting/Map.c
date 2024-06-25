@@ -44,7 +44,6 @@ void MapGen() {
 
             if (i >= ROWS - 1) {
 
-                
                 map[i][j] = 1;
 
                 if (j % 2 != 0)

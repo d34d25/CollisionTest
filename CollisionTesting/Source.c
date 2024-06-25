@@ -21,7 +21,7 @@ int main()
 
     MapGen();
 
-    player_x = screenWidth * 0.1; player_y = ROWS * tileSize - tileSize - player_height; player_width = 25; player_height = 35;
+    player_x = (COL * tileSize) / 2; player_y = ROWS * tileSize - tileSize - player_height; player_width = 25; player_height = 35;
     player_x_velocity = 0; player_y_velocity = 0;
     player_can_jump = false;
 
@@ -95,25 +95,29 @@ int main()
                 map_x = j * tileSize;
                 map_y = i * tileSize;
 
-                if (map[i][j] != 0)
+                if (i >= 0 && i < ROWS && j >= 0 && j < COL)
                 {
-                    if (player_x + player_width + player_x_velocity > map_x &&
-                        player_x + player_x_velocity < map_x + tileSize &&
-                        player_y + player_height > map_y &&
-                        player_y < map_y + tileSize)
+                    if (map[i][j] != 0)
                     {
-                        collision_x_detected = true;
-                    }
+                        if (player_x + player_width + player_x_velocity > map_x &&
+                            player_x + player_x_velocity < map_x + tileSize &&
+                            player_y + player_height > map_y &&
+                            player_y < map_y + tileSize)
+                        {
+                            collision_x_detected = true;
+                        }
 
-                    if (player_x + player_width > map_x &&
-                        player_x < map_x + tileSize &&
-                        player_y + player_height + player_y_velocity > map_y &&
-                        player_y + player_y_velocity < map_y + tileSize)
-                    {
-                        collision_y_detected = true;
-                        collision_tile_y = map_y;
+                        if (player_x + player_width > map_x &&
+                            player_x < map_x + tileSize &&
+                            player_y + player_height + player_y_velocity > map_y &&
+                            player_y + player_y_velocity < map_y + tileSize)
+                        {
+                            collision_y_detected = true;
+                            collision_tile_y = map_y;
+                        }
                     }
                 }
+                
             }
         }
 
@@ -184,17 +188,18 @@ int main()
 
         BeginMode2D(camera);
 
-        ClearBackground(DARKBLUE);
+        ClearBackground(SKYBLUE);
 
         // Draw map within the camera bounds
         for (int i = cam_top; i <= cam_bottom; i++)
         {
             for (int j = cam_left; j <= cam_right; j++)
             {
-                int block_id = map[i][j];
-
-                DrawRectangle(j * tileSize, i * tileSize, tileSize, tileSize, block_list[block_id]);
-  
+                if (i >= 0 && i < ROWS && j >= 0 && j < COL)
+                {
+                    int block_id = map[i][j];
+                    DrawRectangle(j* tileSize, i* tileSize, tileSize, tileSize, block_list[block_id]);
+                }  
             }
         }
 

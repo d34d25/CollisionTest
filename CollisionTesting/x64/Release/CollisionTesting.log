@@ -1,0 +1,17 @@
+﻿  Source.c
+E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(30,41): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(30,70): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(47,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(48,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(50,63): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(51,64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(52,63): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(53,66): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Generating code
+  0 of 7 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  CollisionTesting.vcxproj -> E:\C++ projects\CollisionTesting\x64\Release\CollisionTesting.exe
+  "pwsh.exe" no se reconoce como un comando interno o externo,
+  programa o archivo por lotes ejecutable.
