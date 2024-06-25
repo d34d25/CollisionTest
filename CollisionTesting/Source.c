@@ -16,6 +16,8 @@ int main()
     const int screenHeight = 600;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    
+    InitializeBlocks();
 
     MapGen();
 
@@ -67,10 +69,7 @@ int main()
         {
             camera.target.y = 0;
         }
-  
-
-
-
+        
 
         int collision_tile_y = 0;
 
@@ -84,7 +83,7 @@ int main()
 
         ApplyGravity();
 
-        MapMod(player_x, player_y, camera);
+        MapMod(player_x, player_y, player_height,camera);
 
 
         //collision detection
@@ -96,7 +95,7 @@ int main()
                 map_x = j * tileSize;
                 map_y = i * tileSize;
 
-                if (map[i][j] == 1 || map[i][j] == 2)
+                if (map[i][j] != 0)
                 {
                     if (player_x + player_width + player_x_velocity > map_x &&
                         player_x + player_x_velocity < map_x + tileSize &&
@@ -125,6 +124,14 @@ int main()
 
         if (player_x + player_width + player_x_velocity > COL * tileSize) {
             collision_with_frame_x = true;
+        }
+
+        if (player_y + player_y_velocity < 0) {
+            collision_with_frame_y = true;
+        }
+
+        if (player_y + player_height + player_y_velocity > ROWS * tileSize) {
+            collision_with_frame_y = true;
         }
 
         //collision resolution
@@ -159,7 +166,7 @@ int main()
             {
                 player_can_jump = true;
                 player_y_velocity = 0;
-                player_y = screenHeight - player_height;
+                player_y = ROWS * tileSize - player_height;
             }
             else if (player_y_velocity < 0)
             {
@@ -177,31 +184,30 @@ int main()
 
         BeginMode2D(camera);
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(DARKBLUE);
 
         // Draw map within the camera bounds
         for (int i = cam_top; i <= cam_bottom; i++)
         {
             for (int j = cam_left; j <= cam_right; j++)
             {
-                if (map[i][j] == 1)
-                {
-                    DrawRectangle(j * tileSize, i * tileSize, tileSize, tileSize, DARKGREEN);
-                }
-                else if (map[i][j] == 2)
-                {
-                    DrawRectangle(j* tileSize, i* tileSize, tileSize, tileSize, GREEN);
-                }
-                else
-                {
-                    DrawRectangle(j * tileSize, i * tileSize, tileSize, tileSize, DARKBLUE);
-                }
+                int block_id = map[i][j];
+
+                DrawRectangle(j * tileSize, i * tileSize, tileSize, tileSize, block_list[block_id]);
+  
             }
         }
 
         DrawRectangle(player_x, player_y, player_width, player_height, RED); //draws player
 
+
         EndMode2D();
+
+        DrawText(TextFormat("Current Index: %d", current_index), 10, 10, 20, WHITE);
+        DrawText(TextFormat(" %s", color_names[current_index]), 10, 40, 20, WHITE);
+
+        DrawText(TextFormat("player_x: %d", player_x/tileSize), 10, 60, 20, WHITE);
+        DrawText(TextFormat("player_y: %d", player_y/tileSize), 10, 80, 20, WHITE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

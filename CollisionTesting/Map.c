@@ -1,13 +1,49 @@
+#include<stdio.h>
 #include "map.h"
 #include "raylib.h"
 
+struct Color block_list[BLOCK_COUNT];
+
 int map[ROWS][COL];
 int tileSize = 25;
+int current_index = 1;
+
+const char* color_names[BLOCK_COUNT] = {
+    "SKYBLUE",
+    "DARKGREEN",
+    "LIME",
+    "GREEN",
+    "DARKGRAY",
+    "GRAY",
+    "BEIGE",
+    "GOLD",
+    "BLUE",
+    "PINK",
+    "WHITE"
+};
+
+void InitializeBlocks()
+{
+    block_list[0] = SKYBLUE;
+    block_list[1] = DARKGREEN;
+    block_list[2] = LIME;
+    block_list[3] = GREEN;
+    block_list[4] = DARKGRAY;
+    block_list[5] = GRAY;
+    block_list[6] = BEIGE;
+    block_list[7] = GOLD;
+    block_list[8] = BLUE;
+    block_list[9] = PINK;
+    block_list[10] = WHITE;
+}
 
 void MapGen() {
+
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COL; j++) {
+
             if (i >= ROWS - 1) {
+
                 
                 map[i][j] = 1;
 
@@ -24,34 +60,41 @@ void MapGen() {
 }
 
 
-void MapMod(int playerX, int playerY, Camera2D camera) {
-    // Get mouse position relative to the camera view
+void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
+
     Vector2 mousePosition = GetMousePosition();
     Vector2 worldMousePosition = GetScreenToWorld2D(mousePosition, camera);
 
-    // Convert player and mouse positions to tile coordinates
     int player_tile_x = (playerX / tileSize);
     int player_tile_y = (playerY / tileSize);
+
     int mouse_tile_x = (int)(worldMousePosition.x / tileSize);
     int mouse_tile_y = (int)(worldMousePosition.y / tileSize);
 
-    // Check if mouse is within a certain distance from the player
     int tile_distance_x = abs(mouse_tile_x - player_tile_x);
     int tile_distance_y = abs(mouse_tile_y - player_tile_y);
     bool is_within_distance = (tile_distance_x <= 3 && tile_distance_y <= 3);
 
-    // Perform tile modification based on mouse input
+    int wheelMove = GetMouseWheelMove();
+    current_index += wheelMove;
+
+    if (current_index < 1) {
+        current_index = BLOCK_COUNT - 1;  // Wrap around to the last block
+    }
+    else if (current_index >= BLOCK_COUNT) {
+        current_index = 1;  // Wrap around to the first block
+    }
+
     if (is_within_distance && mouse_tile_x >= 0 && mouse_tile_y >= 0 && mouse_tile_x < COL && mouse_tile_y < ROWS) {
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 1) {
+
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && map[mouse_tile_y][mouse_tile_x] != 0) {
             map[mouse_tile_y][mouse_tile_x] = 0;
         }
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 2)
-        {
-            map[mouse_tile_y][mouse_tile_x] = 0;
-        }
+
         if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
-            map[mouse_tile_y][mouse_tile_x] = 1;
+            map[mouse_tile_y][mouse_tile_x] = current_index;
         }
+        
     }
 }
 

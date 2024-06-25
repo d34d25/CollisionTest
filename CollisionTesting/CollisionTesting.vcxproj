@@ -127,11 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Blocks.c" />
     <ClCompile Include="Map.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="Source.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Blocks.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Map.h" />
   </ItemGroup>
