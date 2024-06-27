@@ -5,7 +5,7 @@
 
 int map_x, map_y; //used for collision detetcion
 
-void SaveMap();
+void SaveMap(int current_map[ROWS][COL]);
 
 void  LoadMap();
 
@@ -301,8 +301,9 @@ void SaveMap(int current_map[ROWS][COL])
     }
 
     fclose(fp); // Close the file
-
+    printf("Map saved successfully in map.txt.\n");
 }
+
 
 void LoadMap()
 {

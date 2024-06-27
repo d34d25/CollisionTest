@@ -25,7 +25,9 @@ const char* color_names[BLOCK_COUNT] = {
     "YELLOW",
     "PURPLE",
     "DARKPURPLE",
-    "ORANGE"
+    "ORANGE",
+    "BROWN",
+    "DARKBROWN"
 };
 
 void InitializeBlocks()
@@ -47,6 +49,8 @@ void InitializeBlocks()
     block_list[14] = PURPLE;
     block_list[15] = DARKPURPLE;
     block_list[16] = ORANGE;
+    block_list[17] = BROWN;
+    block_list[18] = DARKBROWN;
 }
 
 void MapGen() {
@@ -77,7 +81,7 @@ void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
     Vector2 worldMousePosition = GetScreenToWorld2D(mousePosition, camera);
 
     int player_tile_x = (playerX / tileSize);
-    int player_tile_x_right = (playerX + tileSize) / tileSize;
+    //int player_tile_x_right = (playerX + tileSize) / tileSize;
     int player_tile_y = (playerY / tileSize);
     int player_tile_y_top = ((playerY - playrH) / tileSize);
     int player_tile_y_bottom = ((playerY + playrH) / tileSize);
@@ -108,7 +112,7 @@ void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
         }
 
         
-        if (!(mouse_tile_x == player_tile_x && (mouse_tile_y >= player_tile_y && mouse_tile_y <= player_tile_y_bottom)))
+        if (!(mouse_tile_x == player_tile_x && (mouse_tile_y >= player_tile_y && mouse_tile_y < player_tile_y_bottom)))
         {
             if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
                 map[mouse_tile_y][mouse_tile_x] = current_index;
