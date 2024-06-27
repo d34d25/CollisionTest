@@ -5,6 +5,10 @@
 
 int map_x, map_y; //used for collision detetcion
 
+void SaveMap();
+
+void  LoadMap();
+
 int main()
 {
     // Initialization
@@ -31,7 +35,7 @@ int main()
 
     MapGen();
 
-    player_x = (COL * tileSize) / 2; player_y = ROWS * tileSize - tileSize - player_height; player_width = 25; player_height = 35;
+    player_x = (COL * tileSize) / 2; player_y = ROWS * tileSize - tileSize - player_height; player_width = tileSize; player_height = 35;
     player_x_velocity = 0; player_y_velocity = 0;
     player_can_jump = false;
 
@@ -40,6 +44,8 @@ int main()
     camera.target = (Vector2){ player_x + player_width / 2, player_y + player_height / 2 };
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
+
+    
 
     int maxCameraX = COL * tileSize - GetScreenWidth();
     int maxCameraY = ROWS * tileSize - GetScreenHeight();
@@ -104,11 +110,24 @@ int main()
         bool collision_with_frame_y = false;
 
         MovePlayer(); // this has to be first
+        int player_tile_x_right = (player_x + player_width) / tileSize;
+        int player_tile_x = (player_x / tileSize);
+
+        int player_mid_x = (player_tile_x + player_tile_x_right) / 2;
 
         ApplyGravity();
 
         MapMod(player_x, player_y, player_height,camera);
 
+        if (IsKeyPressed(KEY_F5))
+        {
+            SaveMap(map);
+        }
+
+        if (IsKeyPressed(KEY_F9))
+        {
+            LoadMap();
+        }
 
         //collision detection
 
@@ -231,7 +250,10 @@ int main()
             }
         }
 
+        
         DrawRectangle(player_x, player_y, player_width, player_height, RED); //draws player
+        DrawRectangle(player_x, player_y, player_width, player_height/ 2, BEIGE);
+        DrawRectangle(player_x, player_y, player_width, player_height / 6, BROWN);
 
 
         EndMode2D();
@@ -241,9 +263,10 @@ int main()
 
         DrawText(TextFormat("player_x: %d", player_x/tileSize), 10, 60, 20, WHITE);
         DrawText(TextFormat("player_y: %d", player_y/tileSize), 10, 80, 20, WHITE);
+        DrawText(TextFormat("player_w: %d", player_width), 10, 100, 20, WHITE);
 
         DrawFPS(screenWidth - 100, 0);
-        DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 100, 20, WHITE);
+        DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 120, 20, WHITE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -255,6 +278,53 @@ int main()
     //--------------------------------------------------------------------------------------
 
     return 0;
+}
+
+
+void SaveMap(int current_map[ROWS][COL])
+{
+    FILE *fp;
+    errno_t err;
+
+    // Open file for writing
+    err = fopen_s(&fp, "map.txt", "w");
+    if (err != 0) {
+        printf("Failed to open file. Error code: %d\n", err);
+        return;
+    }
+
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COL; j++) {
+            fprintf(fp, "%d ", current_map[i][j]);
+        }
+        fprintf(fp, "\n"); // New line after each row
+    }
+
+    fclose(fp); // Close the file
+
+}
+
+void LoadMap()
+{
+    FILE* fp;
+    errno_t err;
+
+    // Open file for writing
+    err = fopen_s(&fp, "map.txt", "r");
+    if (err != 0) {
+        printf("Failed to open file. Error code: %d\n", err);
+        return;
+    }
+
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COL; j++) {
+            fscanf_s(fp, "%d", &map[i][j]);
+        }
+    }
+    
+    fclose(fp); // Close the file
+    printf("Map loaded successfully from map.txt.\n");
+
 }
 
 

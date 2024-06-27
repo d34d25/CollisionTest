@@ -77,6 +77,8 @@ void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
     Vector2 worldMousePosition = GetScreenToWorld2D(mousePosition, camera);
 
     int player_tile_x = (playerX / tileSize);
+    int player_tile_x_right = (playerX + tileSize) / tileSize;
+    int player_tile_y = (playerY / tileSize);
     int player_tile_y_top = ((playerY - playrH) / tileSize);
     int player_tile_y_bottom = ((playerY + playrH) / tileSize);
 
@@ -105,9 +107,15 @@ void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
             map[mouse_tile_y][mouse_tile_x] = 0;
         }
 
-        if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
-            map[mouse_tile_y][mouse_tile_x] = current_index;
+        
+        if (!(mouse_tile_x == player_tile_x && (mouse_tile_y >= player_tile_y && mouse_tile_y <= player_tile_y_bottom)))
+        {
+            if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
+                map[mouse_tile_y][mouse_tile_x] = current_index;
+            }
         }
+        
+        
         
     }
 }
