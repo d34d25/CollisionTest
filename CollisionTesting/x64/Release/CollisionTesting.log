@@ -1,12 +1,5 @@
-﻿  Source.c
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(44,41): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(44,70): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(77,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(78,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(80,63): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(81,64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(82,63): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(83,66): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+﻿  Map.c
+E:\C++ projects\CollisionTesting\CollisionTesting\Map.c(98,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   Generating code
   0 of 16 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation

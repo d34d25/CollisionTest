@@ -112,7 +112,7 @@ void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
         }
 
         
-        if (!(mouse_tile_x == player_tile_x && (mouse_tile_y >= player_tile_y && mouse_tile_y < player_tile_y_bottom)))
+        if (!((mouse_tile_x >= player_tile_x && mouse_tile_x  <= (playerX + tileSize - 1) / tileSize) && (mouse_tile_y >= player_tile_y && mouse_tile_y < player_tile_y_bottom))) //if (!(mouse_tile_x == player_tile_x && (mouse_tile_y >= player_tile_y && mouse_tile_y < player_tile_y_bottom)))
         {
             if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
                 map[mouse_tile_y][mouse_tile_x] = current_index;
