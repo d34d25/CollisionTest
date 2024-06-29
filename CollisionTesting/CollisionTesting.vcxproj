@@ -127,11 +127,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicEnemy.c" />
+    <ClCompile Include="Entity.c" />
     <ClCompile Include="Map.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="Source.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicEnemy.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Map.h" />
   </ItemGroup>

@@ -23,6 +23,6 @@ extern int tileSize;
 
 void MapGen();
 
-void MapMod(int playrX, int playrY, int playrH,Camera2D playrCam);
+void MapMod(int playerX, int playerY, int playrH, Camera2D camera);
 
 #endif // MAP_H
