@@ -133,6 +133,8 @@ int main()
 
         UpdateEntity(&enemyEntity);
 
+        SelectBlock();
+
         MapMod(&playerEntity, camera);
 
         // Draw

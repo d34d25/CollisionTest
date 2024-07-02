@@ -55,6 +55,7 @@ void InitializeBlocks()
     block_list[18] = DARKBROWN;
 }
 
+
 void MapGen() {
 
     for (int i = 0; i < ROWS; i++) {
@@ -76,6 +77,20 @@ void MapGen() {
     }
 }
 
+
+void SelectBlock()
+{
+    //selects the block
+    int wheelMove = GetMouseWheelMove();
+    current_index += wheelMove;
+
+    if (current_index < 1) {
+        current_index = BLOCK_COUNT - 1;  // Wrap around to the last block
+    }
+    else if (current_index >= BLOCK_COUNT) {
+        current_index = 1;  // Wrap around to the first block
+    }
+}
 
 void MapMod(struct Entity* entity, Camera2D camera) {
 
@@ -115,18 +130,6 @@ void MapMod(struct Entity* entity, Camera2D camera) {
     {
         safety_margin_y_top = player_tile_y_top;
         safety_margin_y_bottom = player_tile_y_bottom;
-    }
-
-
-    //selects the block
-    int wheelMove = GetMouseWheelMove();
-    current_index += wheelMove;
-
-    if (current_index < 1) {
-        current_index = BLOCK_COUNT - 1;  // Wrap around to the last block
-    }
-    else if (current_index >= BLOCK_COUNT) {
-        current_index = 1;  // Wrap around to the first block
     }
 
 

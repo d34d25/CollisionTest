@@ -24,6 +24,8 @@ extern int tileSize;
 
 void MapGen();
 
+void SelectBlock();
+
 void MapMod(struct Entity* entity ,Camera2D camera);
 
 #endif // MAP_H
