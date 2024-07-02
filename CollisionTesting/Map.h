@@ -2,6 +2,7 @@
 #ifndef MAP_H
 #define MAP_H
 #include<stdio.h>
+#include "Entity.h"
 #include "raylib.h"
 
 
@@ -23,6 +24,6 @@ extern int tileSize;
 
 void MapGen();
 
-void MapMod(int playerX, int playerY, int playrH, Camera2D camera);
+void MapMod(struct Entity* entity ,Camera2D camera);
 
 #endif // MAP_H

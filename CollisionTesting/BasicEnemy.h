@@ -6,9 +6,10 @@
 
 extern struct Entity enemyEntity;
 
+void InitEnemy(int tileSize, int rows, int col);
+
 void MoveEnemy(int player_XPos);
 
-void UpdateEnemy();
-
+void DrawEnemy();
 
 #endif

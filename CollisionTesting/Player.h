@@ -9,23 +9,17 @@
 #include "Entity.h"
 
 
-//extern int player_x, player_y, player_width, player_height, player_x_velocity, player_y_velocity;
-
-//extern bool player_can_jump;
-
 extern struct Entity playerEntity;
 
 Camera2D camera;
 
 int maxCameraX, maxCameraY, cam_left, cam_right, cam_top, cam_bottom;
 
+void InitPlayer(int tileSize, int rows, int col);
+
 void ResetPlayerCollisionDetection();
 
-void MovePlayer();
-
-void ApplyGravity();
-
-void UpdatePlayer();
+void MovePlayer(int GRAVITY);
 
 void Set2DCamera(int rows, int cols, int tile_size);
 

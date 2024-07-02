@@ -1,6 +1,8 @@
 #include<stdio.h>
-#include "map.h"
 #include "raylib.h"
+#include "Entity.h"
+#include "map.h"
+
 
 struct Color block_list[BLOCK_COUNT];
 
@@ -75,7 +77,7 @@ void MapGen() {
 }
 
 
-void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
+void MapMod(struct Entity* entity, Camera2D camera) {
 
     
     Vector2 mousePosition = GetMousePosition();
@@ -83,25 +85,38 @@ void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
 
 
     //Transforming player's coordinates to tiles coordinates
-    int player_tile_x = (playerX / tileSize);
-    int player_tile_x_right = ((playerX + tileSize - 1) / tileSize);
+    int player_tile_x_left = (entity->position.x / tileSize);
+    int player_tile_x_right = ((entity->position.x + tileSize - 1) / tileSize);
 
-    int player_tile_y = ((playerY)/ tileSize);
-    int player_tile_y_top = ((playerY - playrH - 5) / tileSize);//this isn't working
-    int player_tile_y_bottom = ((playerY + playrH + 5) / tileSize);
+    int player_tile_y_top = ((entity->position.y - entity->height - 5) / tileSize);
+    int player_tile_y_bottom = ((entity->position.y + entity->height + 5) / tileSize);
 
 
     //Transforming the mouse coordinates to tiles coordinates
     int mouse_tile_x = (int)(worldMousePosition.x / tileSize);
     int mouse_tile_y = (int)(worldMousePosition.y / tileSize);
 
-    //Gets the mouse distance from the player
-    int tile_distance_x = abs(mouse_tile_x - player_tile_x);
-    int tile_distance_y_top = abs(mouse_tile_y - player_tile_y_top);
-    int tile_distance_y_bottom = abs(mouse_tile_y - player_tile_y_bottom);
 
     //check if the mouse is within the distance from the player
-    bool is_within_distance = ((tile_distance_x <= 3 && tile_distance_y_top <= 2) || (tile_distance_x <= 3 && tile_distance_y_bottom <=2));
+    bool is_within_distance = ((abs(mouse_tile_x - player_tile_x_left) <= 3 && abs(mouse_tile_y - player_tile_y_top) <= 2) 
+        || (abs(mouse_tile_x - player_tile_x_left) <= 3 && abs(mouse_tile_y - player_tile_y_bottom) <=2));
+
+
+    int safety_margin_y_top = player_tile_y_top;
+    int safety_margin_y_bottom = player_tile_y_bottom;
+
+    if (entity->velocity.y != 0)
+    {
+        safety_margin_y_top = player_tile_y_top - 1; 
+        safety_margin_y_bottom = player_tile_y_bottom + (entity->height / tileSize);
+        
+    }
+    else if (entity->velocity.y == 0)
+    {
+        safety_margin_y_top = player_tile_y_top;
+        safety_margin_y_bottom = player_tile_y_bottom;
+    }
+
 
     //selects the block
     int wheelMove = GetMouseWheelMove();
@@ -115,7 +130,7 @@ void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
     }
 
 
-    //checks the distance and mouse poistion to determine wether to place a block or not
+    //checks the distance and mouse poistion to determine whether to place a block or not
     if (is_within_distance && mouse_tile_x >= 0 && mouse_tile_y >= 0 && mouse_tile_x < COL && mouse_tile_y < ROWS) {
 
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && map[mouse_tile_y][mouse_tile_x] != 0) {
@@ -123,15 +138,12 @@ void MapMod(int playerX, int playerY,int playrH,Camera2D camera) {
         }
 
         //Also check for the yVelocity!!!
-        if (!((mouse_tile_x >= player_tile_x && mouse_tile_x <= player_tile_x_right && (mouse_tile_y > player_tile_y_top && mouse_tile_y < player_tile_y_bottom)))) //if (!(mouse_tile_x == player_tile_x && (mouse_tile_y >= player_tile_y && mouse_tile_y < player_tile_y_bottom)))
+        if (!((mouse_tile_x >= player_tile_x_left && mouse_tile_x <= player_tile_x_right && (mouse_tile_y > safety_margin_y_top && mouse_tile_y < safety_margin_y_bottom))))
         {
             if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
                 map[mouse_tile_y][mouse_tile_x] = current_index;
             }
         }
-        
-        
-        
     }
 }
 

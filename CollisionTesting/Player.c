@@ -15,8 +15,21 @@ cam_right = 0;
 cam_top = 0;
 cam_bottom = 0;
 
-const int GRAVITY = 1;
-const int TERMINAL_VELOCITY = 9;
+
+
+void InitPlayer(int tileSize, int ROWS, int COL)
+{
+    playerEntity.width = tileSize; playerEntity.height = 35;
+    playerEntity.position.x = (COL * tileSize) / 2; playerEntity.position.y = ROWS * tileSize - tileSize - playerEntity.height;
+    playerEntity.velocity.x = 0; playerEntity.velocity.y = 0;
+    playerEntity.can_jump = false;
+    playerEntity.collision_x_detected = false;
+    playerEntity.collision_y_detected = false;
+    playerEntity.collision_with_frame_x = false;
+    playerEntity.collision_with_frame_y = false;
+
+    playerEntity.collision_tile_y = 0;
+}
 
 void ResetPlayerCollisionDetection()
 {
@@ -26,7 +39,7 @@ void ResetPlayerCollisionDetection()
     playerEntity.collision_with_frame_y = false;
 }
 
-void MovePlayer() {
+void MovePlayer(int GRAVITY) {
     if (IsKeyDown(KEY_D)) {
         playerEntity.velocity.x = 5;
     }
@@ -43,20 +56,6 @@ void MovePlayer() {
     }
 }
 
-void ApplyGravity()
-{
-    playerEntity.velocity.y += GRAVITY;
-    if (playerEntity.velocity.y > TERMINAL_VELOCITY)
-    {
-        playerEntity.velocity.y = TERMINAL_VELOCITY;
-    }
-}
-
-void UpdatePlayer()
-{
-    playerEntity.position.x += playerEntity.velocity.x;
-    playerEntity.position.y += playerEntity.velocity.y;
-}
 
 void Set2DCamera(int rows, int cols, int tile_size)
 {

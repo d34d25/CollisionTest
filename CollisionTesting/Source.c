@@ -3,14 +3,18 @@
 #include "map.h"
 #include "Entity.h"
 #include "player.h"
+#include "BasicEnemy.h"
 //#include "BasicEnemy.h"
 
 
-int collision_tile_y; //used for collision detetcion
+//int collision_tile_y; //used for collision detetcion
 
 void CheckCollisions(struct Entity *entity);
 
 void ResolveCollisions(struct Entity* entity);
+
+const int GRAVITY = 1;
+const int TERMINAL_VELOCITY = 9;
 
 //for enemies only
 void CheckForObstacles(struct Entity* entity);
@@ -50,19 +54,13 @@ int main()
 
     //player initialization
     
-    playerEntity.width = tileSize; playerEntity.height = 35;
-    playerEntity.position.x = (COL * tileSize) / 2; playerEntity.position.y = ROWS * tileSize - tileSize - playerEntity.height;
-    playerEntity.velocity.x = 0; playerEntity.velocity.y = 0;
-    playerEntity.can_jump = false;
-    playerEntity.collision_x_detected = false;
-    playerEntity.collision_y_detected = false;
-    playerEntity.collision_with_frame_x = false;
-    playerEntity.collision_with_frame_y = false;
+    InitPlayer(tileSize, ROWS, COL);
 
     Set2DCamera(ROWS, COL, tileSize);
 
     //enemies initialization
-
+   
+    InitEnemy(tileSize, ROWS, COL);
 
     SetTargetFPS(fps[fps_index]);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -89,15 +87,20 @@ int main()
         //----------------------------------------------------------------------------------   
         Update2DCamera(screenWidth, screenHeight, tileSize);
         
-        collision_tile_y = 0;
+        ResetCollisionDetections(&playerEntity);
+        ResetCollisionDetections(&enemyEntity);
 
-        ResetPlayerCollisionDetection();
+        obstacleDetected = false;
 
-        MovePlayer(); // this has to be before the collision detection
+        MovePlayer(GRAVITY); // this has to be before the collision detection
 
-        ApplyGravity();
+        MoveEnemy(playerEntity.position.x);
 
-        MapMod((int) playerEntity.position.x, (int)playerEntity.position.y, playerEntity.height, camera);
+        ApplyGravity(&playerEntity, GRAVITY, TERMINAL_VELOCITY);
+
+        ApplyGravity(&enemyEntity, GRAVITY, TERMINAL_VELOCITY);
+
+        //MapMod(&playerEntity, camera);
 
         if (IsKeyPressed(KEY_F5))
         {
@@ -113,13 +116,24 @@ int main()
 
         CheckCollisions(&playerEntity);
 
+        CheckCollisions(&enemyEntity);
+
+        CheckForObstacles(&enemyEntity);
+
         //collision resolution
         
         ResolveCollisions(&playerEntity);
 
-        //this has to be last for the collisions to work correctly
-        UpdatePlayer();
+        ResolveCollisions(&enemyEntity);
 
+        JumpObstacles(&enemyEntity);
+
+        //this has to be last for the collisions to work correctly
+        UpdateEntity(&playerEntity);
+
+        UpdateEntity(&enemyEntity);
+
+        MapMod(&playerEntity, camera);
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -146,6 +160,7 @@ int main()
             }
         }
 
+        DrawEnemy();
         
         DrawPlayer();
 
@@ -156,6 +171,8 @@ int main()
 
         DrawText(TextFormat("player_x: %d", (int) playerEntity.position.x/tileSize), 10, 60, 20, WHITE);
         DrawText(TextFormat("player_y: %d", (int) playerEntity.position.y/tileSize), 10, 80, 20, WHITE);
+
+        DrawText(TextFormat("player_y_vel: %d", (int)playerEntity.velocity.y), 10, 100, 20, WHITE);
 
         DrawFPS(screenWidth - 100, 0);
         DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 120, 20, WHITE);
@@ -201,7 +218,7 @@ void CheckCollisions(struct Entity* entity)
                         entity->position.y + entity->velocity.y < map_y + tileSize)
                     {
                         entity->collision_y_detected = true;
-                        collision_tile_y = map_y;
+                        entity->collision_tile_y = map_y;
                     }
                 }
             }
@@ -247,12 +264,12 @@ void ResolveCollisions(struct Entity* entity)
         {
             entity->can_jump = true;
             entity->velocity.y = 0;
-            entity->position.y = collision_tile_y - entity->height;
+            entity->position.y = entity->collision_tile_y - entity->height;
         }
         else if (entity->velocity.y < 0)
         {
             entity->velocity.y = 0;
-            entity->position.y = collision_tile_y + tileSize;
+            entity->position.y = entity->collision_tile_y + tileSize;
         }
     }
 
@@ -271,6 +288,40 @@ void ResolveCollisions(struct Entity* entity)
     }
 }
 
+
+void CheckForObstacles(struct Entity* entity)
+{
+    for (int i = cam_top; i <= cam_bottom; i++)
+    {
+        for (int j = cam_left; j <= cam_right; j++)
+        {
+            int map_x = j * tileSize;
+            int map_y = i * tileSize;
+
+            if (i >= 0 && i < ROWS && j >= 0 && j < COL)
+            {
+                if (map[i][j] != 0) {
+                    if (entity->position.x + entity->velocity.x * 2 + entity->width > map_x &&
+                        entity->position.x + entity->velocity.x * 2 < map_x + tileSize &&
+                        entity->position.y + entity->height > map_y &&
+                        entity->position.y < map_y + tileSize)
+                    {
+                        obstacleDetected = true;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void JumpObstacles(struct Entity* entity)
+{
+    if (obstacleDetected && entity->can_jump)
+    {
+        entity->velocity.y = -GRAVITY - 10;
+        entity->can_jump = false;
+    }
+}
 
 void SaveMap(int current_map[ROWS][COL])
 {
