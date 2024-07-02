@@ -137,7 +137,6 @@ void MapMod(struct Entity* entity, Camera2D camera) {
             map[mouse_tile_y][mouse_tile_x] = 0;
         }
 
-        //Also check for the yVelocity!!!
         if (!((mouse_tile_x >= player_tile_x_left && mouse_tile_x <= player_tile_x_right && (mouse_tile_y > safety_margin_y_top && mouse_tile_y < safety_margin_y_bottom))))
         {
             if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
