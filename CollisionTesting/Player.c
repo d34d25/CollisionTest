@@ -1,9 +1,5 @@
 #include "player.h"
 
-//int player_x = 0, player_y = 0, player_width = 0, player_height = 0;
-//int player_x_velocity = 0 , player_y_velocity = 0;
-//bool player_can_jump = false;
-
 struct Entity playerEntity = { 0 };
 
 Camera2D camera = { 0 };

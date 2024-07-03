@@ -150,3 +150,7 @@ void MapMod(struct Entity* entity, Camera2D camera) {
 }
 
 
+//if (player_tile_y_top -2 >= 0 && player_tile_y_top -2 < ROWS)
+//{
+  //  if ((map[player_tile_x_left][player_tile_y_top - 2] == 0))
+    //{

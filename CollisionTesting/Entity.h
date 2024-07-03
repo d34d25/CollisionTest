@@ -16,6 +16,7 @@ struct Entity
 	bool can_jump;
 };
 
+
 bool obstacleDetected;
 
 void ResetCollisionDetections(struct Entity* entity);
