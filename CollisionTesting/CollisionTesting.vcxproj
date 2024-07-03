@@ -132,7 +132,7 @@
     <ClCompile Include="Map.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="Source.c" />
-    <ClCompile Include="Techical.c" />
+    <ClCompile Include="Technical.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicEnemy.h" />

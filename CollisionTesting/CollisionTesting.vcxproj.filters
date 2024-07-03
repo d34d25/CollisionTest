@@ -56,7 +56,7 @@
     <ClCompile Include="Entity.c">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
-    <ClCompile Include="Techical.c">
+    <ClCompile Include="Technical.c">
       <Filter>Source Files\Main</Filter>
     </ClCompile>
   </ItemGroup>
