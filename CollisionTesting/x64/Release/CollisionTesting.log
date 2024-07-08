@@ -1,13 +1,8 @@
 ﻿  Source.c
-  Technical.c
-E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(78,40): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Technical.c(80,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Technical.c(85,59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Technical.c(95,50): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-E:\C++ projects\CollisionTesting\CollisionTesting\Technical.c(134,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+E:\C++ projects\CollisionTesting\CollisionTesting\Source.c(124,44): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
   Generating code
   Previous IPDB and IOBJ mismatch, fall back to full compilation.
-  All 29 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 31 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   CollisionTesting.vcxproj -> E:\C++ projects\CollisionTesting\x64\Release\CollisionTesting.exe
   "pwsh.exe" no se reconoce como un comando interno o externo,

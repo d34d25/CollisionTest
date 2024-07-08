@@ -72,51 +72,68 @@ int main()
         ResetCollisionDetections(&enemyEntity);
 
         obstacleDetected = false;
-
-        MovePlayer(GRAVITY); // this has to be before the collision detection
-
-        MoveEnemy(playerEntity.position.x);
-
-        ApplyGravity(&playerEntity, GRAVITY, TERMINAL_VELOCITY);
-
-        ApplyGravity(&enemyEntity, GRAVITY, TERMINAL_VELOCITY);
-
-        //MapMod(&playerEntity, camera);
-
-        if (IsKeyPressed(KEY_F5))
+    
+        //player
+        if (!isDead)
         {
-            SaveMap(map);
+            SelectBlock();
+            MapMod(&playerEntity, camera);
+
+            MovePlayer(GRAVITY); // move first
+
+            ApplyGravity(&playerEntity, GRAVITY, TERMINAL_VELOCITY); // move first
+
+            ApplyGravity(&enemyEntity, GRAVITY, TERMINAL_VELOCITY); // move first
+
+            CheckCollisions(&playerEntity); //then check
+
+            CheckCollisionWithEnemies(&playerEntity, &enemyEntity); //then check
+
+            ResolveCollisions(&playerEntity); //then resolve after checking
+
+            ResolveCollisionsWithEnemies(&playerEntity, &enemyEntity); //then resolve after checking
+
+            UpdateEntity(&playerEntity); //and after all that update the position
+
+            if (IsKeyPressed(KEY_F5))
+            {
+                SaveMap(map);
+            }
+
+            if (IsKeyPressed(KEY_F9))
+            {
+                LoadMap();
+            }
+        }
+        else
+        {
+            if (playerEntity.entityColor.a > 0)
+            {
+                playerEntity.entityColor.a--;
+            }
+            else
+            {
+                playerEntity.entityColor.a = 0;
+            }
         }
 
-        if (IsKeyPressed(KEY_F9))
+
+        //enemy
+        if (!isDead)
         {
-            LoadMap();
+            MoveEnemy(playerEntity.position.x);
         }
-
-        //collision detection
-
-        CheckCollisions(&playerEntity);
-
+        
         CheckCollisions(&enemyEntity);
 
         CheckForObstacles(&enemyEntity);
-
-        //collision resolution
-        
-        ResolveCollisions(&playerEntity);
 
         ResolveCollisions(&enemyEntity);
 
         JumpObstacles(&enemyEntity);
 
-        //this has to be last for the collisions to work correctly
-        UpdateEntity(&playerEntity);
-
         UpdateEntity(&enemyEntity);
 
-        SelectBlock();
-
-        MapMod(&playerEntity, camera);
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -159,6 +176,12 @@ int main()
 
         DrawFPS(screenWidth - 100, 0);
         DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 120, 20, WHITE);
+        DrawText(TextFormat("HP: %d", health), 10, 140, 20, WHITE);
+
+        if (isDead)
+        {
+            DrawText(TextFormat("u r ded lol"), screenWidth / 2, 120, 20, WHITE);
+        }
 
         EndDrawing();
         //----------------------------------------------------------------------------------

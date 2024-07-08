@@ -11,6 +11,7 @@ void ResetCollisionDetections(struct Entity* entity)
 	entity->collision_y_detected = false;
 	entity->collision_with_frame_x = false;
 	entity->collision_with_frame_y = false;
+	entity->collision_with_entity = false;
 	entity->collision_tile_y = 0;
 }
 

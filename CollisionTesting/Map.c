@@ -56,8 +56,8 @@ void InitializeBlocks()
 }
 
 
-void MapGen() {
-
+void MapGen() 
+{
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COL; j++) {
 
@@ -92,7 +92,8 @@ void SelectBlock()
     }
 }
 
-void MapMod(struct Entity* entity, Camera2D camera) {
+void MapMod(struct Entity* entity, Camera2D camera)
+{
 
     
     Vector2 mousePosition = GetMousePosition();

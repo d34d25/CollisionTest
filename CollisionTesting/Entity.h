@@ -8,11 +8,13 @@ struct Entity
 	Vector2 position;
 	Vector2 velocity;
 
+	Color entityColor;
+
 	int width, height;
 
 	int collision_tile_y;
 
-	bool collision_x_detected, collision_y_detected, collision_with_frame_x, collision_with_frame_y;
+	bool collision_x_detected, collision_y_detected, collision_with_frame_x, collision_with_frame_y, collision_with_entity;
 	bool can_jump;
 };
 

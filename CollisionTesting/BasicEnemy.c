@@ -8,7 +8,7 @@ void InitEnemy(int tileSize, int ROWS, int COL)
 {
     enemyEntity.width = tileSize;
     enemyEntity.height = tileSize;
-    enemyEntity.position.x = (COL * tileSize) / 2;
+    enemyEntity.position.x = ((COL * tileSize) / 2) - 20 * tileSize;
     enemyEntity.position.y = ROWS * tileSize - tileSize - enemyEntity.height;
     enemyEntity.velocity.x = 0;
     enemyEntity.velocity.y = 0;
@@ -17,8 +17,12 @@ void InitEnemy(int tileSize, int ROWS, int COL)
     enemyEntity.collision_y_detected = false;
     enemyEntity.collision_with_frame_x = false;
     enemyEntity.collision_with_frame_y = false;
+    enemyEntity.collision_with_entity = false;
 
     enemyEntity.collision_tile_y = 0;
+
+
+    enemyEntity.entityColor = GREEN;
 }
 
 void MoveEnemy(int player_XPos)
@@ -36,6 +40,6 @@ void MoveEnemy(int player_XPos)
 
 void DrawEnemy()
 {
-	DrawRectangle(enemyEntity.position.x, enemyEntity.position.y, enemyEntity.width, enemyEntity.height, GREEN);
+	DrawRectangle(enemyEntity.position.x, enemyEntity.position.y, enemyEntity.width, enemyEntity.height, enemyEntity.entityColor);
 }
 

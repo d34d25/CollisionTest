@@ -1,8 +1,14 @@
 #include "Technical.h"
 
+
+
 const int GRAVITY = 1;
 const int TERMINAL_VELOCITY = 9;
 
+int LERP(float a, float b, float t)
+{
+   return (int) (a + (b - a) * t);
+}
 
 void CheckCollisions(struct Entity* entity)
 {
@@ -57,6 +63,9 @@ void CheckCollisions(struct Entity* entity)
         entity->collision_with_frame_y = true;
     }
 }
+
+
+
 
 
 void ResolveCollisions(struct Entity* entity)
@@ -158,6 +167,88 @@ void SaveMap(int current_map[ROWS][COL])
     fclose(fp); // Close the file
     printf("Map saved successfully in map.txt.\n");
 }
+
+void CheckCollisionWithEnemies(struct Entity* entity, struct Entity* entity_e)
+{
+    Rectangle hit_box_p = { entity->position.x, entity->position.y, entity->width,entity->height };
+    Rectangle hit_box_e = { entity_e->position.x, entity_e->position.y, entity_e->width,entity_e->height };
+
+    if (CheckCollisionRecs(hit_box_p, hit_box_e))
+    {
+        entity->collision_with_entity = true;
+    }
+}
+
+
+
+void ResolveCollisionsWithEnemies(struct Entity* entity, struct Entity* entity_e)
+{
+    int knockback = 5;
+    int knockbackForce_X = knockback;
+
+    if (health <= 0)
+    {
+        isDead = true;
+        return;
+    }
+
+    if (!entity->collision_with_entity && player_knockback_duration > 0)
+    {
+        player_knockback_duration --;
+        if (player_knockback_duration < 0)
+        {
+            player_knockback_duration = 0;
+        }
+    }
+
+
+    if (entity->collision_with_entity && !entity->collision_x_detected || player_knockback_duration > 0 && !entity->collision_x_detected)
+    {
+        if (player_knockback_duration == 0)
+        {
+            player_knockback_duration = 50;
+
+            if (entity->position.x < entity_e->position.x)
+            {
+                knockbackForce_X = -knockback;
+            }
+            else
+            {  
+                knockbackForce_X = knockback;
+            }
+
+            entity->velocity.x = knockbackForce_X;
+        }
+
+        else if (player_knockback_duration > 0 && !entity->collision_x_detected)
+        {
+            if (entity->position.x < entity_e->position.x)
+            {
+                knockbackForce_X = -knockback;
+            }
+            else
+            {
+                knockbackForce_X = knockback;
+            }
+
+            entity->velocity.x = knockbackForce_X;
+           
+            player_knockback_duration--; 
+        }
+    }
+
+    if (entity->collision_with_entity && !entity->collision_x_detected)
+    {
+        entity->velocity.y = -GRAVITY - knockback * 2;
+        entity->can_jump = false;
+
+        health = health - 20;
+
+    }
+}
+
+
+
 
 
 void LoadMap()
