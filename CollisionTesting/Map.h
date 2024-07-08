@@ -26,6 +26,6 @@ void MapGen();
 
 void SelectBlock();
 
-void MapMod(struct Entity* entity ,Camera2D camera);
+void MapMod(struct Entity* entity ,Camera2D camera, bool noClipStatus);
 
 #endif // MAP_H

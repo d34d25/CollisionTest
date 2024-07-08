@@ -14,8 +14,10 @@ struct Entity
 
 	int collision_tile_y;
 
+	int health, knockback_duration;
+
 	bool collision_x_detected, collision_y_detected, collision_with_frame_x, collision_with_frame_y, collision_with_entity;
-	bool can_jump;
+	bool can_jump, no_clip, isDead;
 };
 
 

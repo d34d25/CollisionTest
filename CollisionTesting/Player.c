@@ -11,27 +11,37 @@ cam_right = 0;
 cam_top = 0;
 cam_bottom = 0;
 
-
-
 void InitPlayer(int tileSize, int ROWS, int COL)
 {
     playerEntity.width = tileSize; playerEntity.height = 35;
+
     playerEntity.position.x = (COL * tileSize) / 2; playerEntity.position.y = ROWS * tileSize - tileSize - playerEntity.height;
+
     playerEntity.velocity.x = 0; playerEntity.velocity.y = 0;
+
     playerEntity.can_jump = false;
+
     playerEntity.collision_x_detected = false;
+
     playerEntity.collision_y_detected = false;
+
     playerEntity.collision_with_frame_x = false;
+
     playerEntity.collision_with_frame_y = false;
+
     playerEntity.collision_with_entity = false;
 
     playerEntity.collision_tile_y = 0;
 
     playerEntity.entityColor = RED;
 
-    health = 100;
-    player_knockback_duration = 0;
-    isDead = false;
+    playerEntity.no_clip = false;
+
+    playerEntity.isDead = false;
+
+    playerEntity.health = 100;
+
+    playerEntity.knockback_duration = 0;
 }
 
 void ResetPlayerCollisionDetection()
@@ -42,26 +52,46 @@ void ResetPlayerCollisionDetection()
     playerEntity.collision_with_frame_y = false;
 }
 
-void MovePlayer(int GRAVITY)  
+void MovePlayer(int GRAVITY)
 {
-    if (IsKeyDown(KEY_D)) 
+    if (IsKeyDown(KEY_D))
     {
         playerEntity.velocity.x = 5;
     }
-    else if (IsKeyDown(KEY_A)) 
+    else if (IsKeyDown(KEY_A))
     {
         playerEntity.velocity.x = -5;
     }
-    else 
+    else
     {
         playerEntity.velocity.x = 0;
     }
 
-    if (IsKeyDown(KEY_SPACE) && playerEntity.can_jump) 
+    if (!playerEntity.no_clip)
     {
-        playerEntity.velocity.y = -GRAVITY - 10;
-        playerEntity.can_jump = false;
+        if (IsKeyDown(KEY_SPACE) && playerEntity.can_jump)
+        {
+            playerEntity.velocity.y = -GRAVITY - 10;
+            playerEntity.can_jump = false;
+        } 
     }
+    else
+    {
+        if (IsKeyDown(KEY_W) || IsKeyDown(KEY_SPACE))
+        {
+            playerEntity.velocity.y = -5;
+        }
+        else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_LEFT_CONTROL))
+        {
+            playerEntity.velocity.y = 5;
+        }
+        else
+        {
+            playerEntity.velocity.y = 0;
+        }
+    }
+
+    
 }
 
 

@@ -92,7 +92,7 @@ void SelectBlock()
     }
 }
 
-void MapMod(struct Entity* entity, Camera2D camera)
+void MapMod(struct Entity* entity, Camera2D camera, bool noClipStatus)
 {
 
     
@@ -137,16 +137,36 @@ void MapMod(struct Entity* entity, Camera2D camera)
     //checks the distance and mouse poistion to determine whether to place a block or not
     if (is_within_distance && mouse_tile_x >= 0 && mouse_tile_y >= 0 && mouse_tile_x < COL && mouse_tile_y < ROWS) {
 
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && map[mouse_tile_y][mouse_tile_x] != 0) {
-            map[mouse_tile_y][mouse_tile_x] = 0;
-        }
-
-        if (!((mouse_tile_x >= player_tile_x_left && mouse_tile_x <= player_tile_x_right && (mouse_tile_y > safety_margin_y_top && mouse_tile_y < safety_margin_y_bottom))))
+        if (!noClipStatus)
         {
-            if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && map[mouse_tile_y][mouse_tile_x] != 0) {
+                map[mouse_tile_y][mouse_tile_x] = 0;
+            }
+        }
+        else
+        {
+            if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && map[mouse_tile_y][mouse_tile_x] != 0) {
+                map[mouse_tile_y][mouse_tile_x] = 0;
+            }
+        }
+        
+
+        if (!noClipStatus)
+        {
+            if (!((mouse_tile_x >= player_tile_x_left && mouse_tile_x <= player_tile_x_right && (mouse_tile_y > safety_margin_y_top && mouse_tile_y < safety_margin_y_bottom))))
+            {
+                if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
+                    map[mouse_tile_y][mouse_tile_x] = current_index;
+                }
+            }
+        }
+        else
+        {
+            if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
                 map[mouse_tile_y][mouse_tile_x] = current_index;
             }
         }
+        
     }
 }
 

@@ -15,10 +15,6 @@ Camera2D camera;
 
 extern int maxCameraX, maxCameraY, cam_left, cam_right, cam_top, cam_bottom;
 
-int health, player_knockback_duration;
-
-bool isDead;
-
 void InitPlayer(int tileSize, int rows, int col);
 
 void ResetPlayerCollisionDetection();

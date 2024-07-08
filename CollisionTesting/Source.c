@@ -26,6 +26,8 @@ int main()
     const int screenWidth = 1200;
     const int screenHeight = 800;
 
+    bool v_key_pressed = false;
+
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     
     InitializeBlocks();
@@ -74,16 +76,14 @@ int main()
         obstacleDetected = false;
     
         //player
-        if (!isDead)
+        if (!playerEntity.isDead)
         {
             SelectBlock();
-            MapMod(&playerEntity, camera);
+            MapMod(&playerEntity, camera, playerEntity.no_clip);
 
             MovePlayer(GRAVITY); // move first
 
             ApplyGravity(&playerEntity, GRAVITY, TERMINAL_VELOCITY); // move first
-
-            ApplyGravity(&enemyEntity, GRAVITY, TERMINAL_VELOCITY); // move first
 
             CheckCollisions(&playerEntity); //then check
 
@@ -104,6 +104,27 @@ int main()
             {
                 LoadMap();
             }
+
+            if (IsKeyPressed(KEY_V) && !v_key_pressed)
+            {
+                playerEntity.no_clip = true;
+                v_key_pressed = true;
+            } 
+            else if(IsKeyPressed(KEY_V) && v_key_pressed)
+            {
+                playerEntity.no_clip = false;
+                v_key_pressed = false;
+            }
+
+            if (playerEntity.no_clip)
+            {
+                GRAVITY = 0;
+            }
+            else
+            {
+                GRAVITY = 1;
+            }
+
         }
         else
         {
@@ -119,10 +140,12 @@ int main()
 
 
         //enemy
-        if (!isDead)
+        if (!playerEntity.isDead)
         {
             MoveEnemy(playerEntity.position.x);
         }
+
+        ApplyGravity(&enemyEntity, GRAVITY, TERMINAL_VELOCITY); // move first
         
         CheckCollisions(&enemyEntity);
 
@@ -176,9 +199,9 @@ int main()
 
         DrawFPS(screenWidth - 100, 0);
         DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 120, 20, WHITE);
-        DrawText(TextFormat("HP: %d", health), 10, 140, 20, WHITE);
+        DrawText(TextFormat("HP: %d", playerEntity.health), 10, 140, 20, WHITE);
 
-        if (isDead)
+        if (playerEntity.isDead)
         {
             DrawText(TextFormat("u r ded lol"), screenWidth / 2, 120, 20, WHITE);
         }

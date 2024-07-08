@@ -2,46 +2,47 @@
 
 
 
-const int GRAVITY = 1;
+int GRAVITY = 1;
 const int TERMINAL_VELOCITY = 9;
 
-int LERP(float a, float b, float t)
-{
-   return (int) (a + (b - a) * t);
-}
+
 
 void CheckCollisions(struct Entity* entity)
 {
-    for (int i = cam_top; i <= cam_bottom; i++)
+    if (!entity->no_clip)
     {
-        for (int j = cam_left; j <= cam_right; j++)
+        for (int i = cam_top; i <= cam_bottom; i++)
         {
-            int map_x = j * tileSize;
-            int map_y = i * tileSize;
-
-            if (i >= 0 && i < ROWS && j >= 0 && j < COL)
+            for (int j = cam_left; j <= cam_right; j++)
             {
-                if (map[i][j] != 0) {
-                    if (entity->position.x + entity->velocity.x + entity->width > map_x &&
-                        entity->position.x + entity->velocity.x < map_x + tileSize &&
-                        entity->position.y + entity->height > map_y &&
-                        entity->position.y < map_y + tileSize)
-                    {
-                        entity->collision_x_detected = true;
-                    }
+                int map_x = j * tileSize;
+                int map_y = i * tileSize;
 
-                    if (entity->position.x + entity->width > map_x &&
-                        entity->position.x < map_x + tileSize &&
-                        entity->position.y + entity->velocity.y + entity->height > map_y &&
-                        entity->position.y + entity->velocity.y < map_y + tileSize)
-                    {
-                        entity->collision_y_detected = true;
-                        entity->collision_tile_y = map_y;
+                if (i >= 0 && i < ROWS && j >= 0 && j < COL)
+                {
+                    if (map[i][j] != 0) {
+                        if (entity->position.x + entity->velocity.x + entity->width > map_x &&
+                            entity->position.x + entity->velocity.x < map_x + tileSize &&
+                            entity->position.y + entity->height > map_y &&
+                            entity->position.y < map_y + tileSize)
+                        {
+                            entity->collision_x_detected = true;
+                        }
+
+                        if (entity->position.x + entity->width > map_x &&
+                            entity->position.x < map_x + tileSize &&
+                            entity->position.y + entity->velocity.y + entity->height > map_y &&
+                            entity->position.y + entity->velocity.y < map_y + tileSize)
+                        {
+                            entity->collision_y_detected = true;
+                            entity->collision_tile_y = map_y;
+                        }
                     }
                 }
             }
         }
     }
+    
 
     if (entity->position.x + entity->velocity.x < 0)
     {
@@ -170,13 +171,17 @@ void SaveMap(int current_map[ROWS][COL])
 
 void CheckCollisionWithEnemies(struct Entity* entity, struct Entity* entity_e)
 {
-    Rectangle hit_box_p = { entity->position.x, entity->position.y, entity->width,entity->height };
-    Rectangle hit_box_e = { entity_e->position.x, entity_e->position.y, entity_e->width,entity_e->height };
-
-    if (CheckCollisionRecs(hit_box_p, hit_box_e))
+    if (!entity->no_clip)
     {
-        entity->collision_with_entity = true;
+        Rectangle hit_box_p = { entity->position.x, entity->position.y, entity->width,entity->height };
+        Rectangle hit_box_e = { entity_e->position.x, entity_e->position.y, entity_e->width,entity_e->height };
+
+        if (CheckCollisionRecs(hit_box_p, hit_box_e))
+        {
+            entity->collision_with_entity = true;
+        }
     }
+   
 }
 
 
@@ -186,27 +191,27 @@ void ResolveCollisionsWithEnemies(struct Entity* entity, struct Entity* entity_e
     int knockback = 5;
     int knockbackForce_X = knockback;
 
-    if (health <= 0)
+    if (entity->health <= 0)
     {
-        isDead = true;
+        entity->isDead = true;
         return;
     }
 
-    if (!entity->collision_with_entity && player_knockback_duration > 0)
+    if (!entity->collision_with_entity && entity->knockback_duration > 0)
     {
-        player_knockback_duration --;
-        if (player_knockback_duration < 0)
+        entity->knockback_duration--;
+        if (entity->knockback_duration < 0)
         {
-            player_knockback_duration = 0;
+            entity->knockback_duration = 0;
         }
     }
 
 
-    if (entity->collision_with_entity && !entity->collision_x_detected || player_knockback_duration > 0 && !entity->collision_x_detected)
+    if (entity->collision_with_entity && !entity->collision_x_detected || entity->knockback_duration > 0 && !entity->collision_x_detected)
     {
-        if (player_knockback_duration == 0)
+        if (entity->knockback_duration == 0)
         {
-            player_knockback_duration = 50;
+            entity->knockback_duration = 50;
 
             if (entity->position.x < entity_e->position.x)
             {
@@ -220,10 +225,10 @@ void ResolveCollisionsWithEnemies(struct Entity* entity, struct Entity* entity_e
             entity->velocity.x = knockbackForce_X;
         }
 
-        else if (player_knockback_duration > 0 && !entity->collision_x_detected)
+        else if (entity->knockback_duration > 0 && !entity->collision_x_detected)
         {
             if (entity->position.x < entity_e->position.x)
-            {
+            {  
                 knockbackForce_X = -knockback;
             }
             else
@@ -233,7 +238,7 @@ void ResolveCollisionsWithEnemies(struct Entity* entity, struct Entity* entity_e
 
             entity->velocity.x = knockbackForce_X;
            
-            player_knockback_duration--; 
+            entity->knockback_duration--;
         }
     }
 
@@ -242,7 +247,7 @@ void ResolveCollisionsWithEnemies(struct Entity* entity, struct Entity* entity_e
         entity->velocity.y = -GRAVITY - knockback * 2;
         entity->can_jump = false;
 
-        health = health - 20;
+        entity->health = entity->health - 20;
 
     }
 }

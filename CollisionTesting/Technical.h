@@ -8,10 +8,8 @@
 #include "Entity.h"
 #include "Player.h"
 
-extern const int GRAVITY;
+extern int GRAVITY;
 extern const int TERMINAL_VELOCITY;
-
-int LERP(float a, float b, float t);
 
 void CheckCollisions(struct Entity* entity);
 
