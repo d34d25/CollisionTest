@@ -15,44 +15,70 @@ const char* color_names[BLOCK_COUNT] = {
     "DARKGREEN",
     "LIME",
     "GREEN",
-    "DARKGRAY",
     "GRAY",
+    "DARKGRAY",
     "BEIGE",
-    "GOLD",
-    "BLUE",
-    "PINK",
-    "WHITE",
-    "RED",
-    "BLACK",
+    "BROWN",
+    "DARKBROWN",
     "YELLOW",
+    "GOLD",
+    "ORANGE",
     "PURPLE",
     "DARKPURPLE",
-    "ORANGE",
-    "BROWN",
-    "DARKBROWN"
+    "RED",
+    "PINK",
+    "BLUE",
+    "DARKBLUE",
+    "BLACK",
+    "WHITE"
 };
 
 void InitializeBlocks()
 {
-    block_list[0] = SKYBLUE;
+    block_list[0] = SKYBLUE; 
     block_list[1] = DARKGREEN;
     block_list[2] = LIME;
     block_list[3] = GREEN;
-    block_list[4] = DARKGRAY;
-    block_list[5] = GRAY;
+    block_list[4] = GRAY;
+    block_list[5] = DARKGRAY;
     block_list[6] = BEIGE;
-    block_list[7] = GOLD;
-    block_list[8] = BLUE;
-    block_list[9] = PINK;
-    block_list[10] = WHITE;
-    block_list[11] = RED;
-    block_list[12] = BLACK;
-    block_list[13] = YELLOW;
-    block_list[14] = PURPLE;
-    block_list[15] = DARKPURPLE;
-    block_list[16] = ORANGE;
-    block_list[17] = BROWN;
-    block_list[18] = DARKBROWN;
+    block_list[7] = BROWN;
+    block_list[8] = DARKBROWN;
+    block_list[9] = YELLOW;
+    block_list[10] = GOLD;
+    block_list[11] = ORANGE;
+    block_list[12] = PURPLE;
+    block_list[13] = DARKPURPLE;
+    block_list[14] = RED;
+    block_list[15] = PINK;
+    block_list[16] = BLUE;
+    block_list[17] = DARKBLUE;
+    block_list[18] = BLACK;
+    block_list[19] = WHITE;
+
+    /*
+        SKY 0 
+        DARKGREEN 1
+        LIME 2
+        GREEN 3
+        GRAY 4
+        DARKGRAY 5
+        BEIGE 6
+        BROWN 7
+        DARKBROWN 8
+        YELLOW 9
+        GOLD 10
+        ORANGE 11
+        PURPLE 12
+        DARKPURPLE 13
+        RED 14
+        PINK 15
+        BLUE 16
+        DARKBLUE 17
+        BLACK 18
+        WHITE 19
+
+    */
 }
 
 
