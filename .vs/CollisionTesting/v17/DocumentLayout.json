@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "E:\\C\u002B\u002B projects\\CollisionTesting\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Source.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\Source.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\Player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Map.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\Map.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -13,14 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Technical.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\Technical.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\Player.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Technical.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -39,10 +43,6 @@
       "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\BasicEnemy.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Source.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\Source.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Entity.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8BBF99BF-6B6C-43B6-BD92-FCB6E4913126}|CollisionTesting\\CollisionTesting.vcxproj|solutionrelative:CollisionTesting\\Entity.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -54,11 +54,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Map.h",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Map.h",
               "RelativeDocumentMoniker": "CollisionTesting\\Map.h",
@@ -67,18 +67,17 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-06-23T12:18:22.267Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Map.c",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Map.c",
               "RelativeDocumentMoniker": "CollisionTesting\\Map.c",
               "ToolTip": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Map.c",
               "RelativeToolTip": "CollisionTesting\\Map.c",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAuwEwAAAATAAAA",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAuwCMAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2024-06-23T12:25:10.319Z",
               "IsPinned": true,
@@ -86,7 +85,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "BasicEnemy.h",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\BasicEnemy.h",
               "RelativeDocumentMoniker": "CollisionTesting\\BasicEnemy.h",
@@ -95,24 +94,24 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-06-29T14:09:03.225Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 0,
               "Title": "Source.c",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Source.c",
               "RelativeDocumentMoniker": "CollisionTesting\\Source.c",
               "ToolTip": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Source.c",
               "RelativeToolTip": "CollisionTesting\\Source.c",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAMkAAAA5AAAA",
+              "ViewState": "AQIAAL4AAAAAAAAAAAAewMwAAABRAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-07-08T01:46:13.745Z"
+              "WhenOpened": "2024-07-08T01:46:13.745Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Technical.h",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Technical.h",
               "RelativeDocumentMoniker": "CollisionTesting\\Technical.h",
@@ -120,12 +119,11 @@
               "RelativeToolTip": "CollisionTesting\\Technical.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-07-03T23:07:31.839Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-03T23:07:31.839Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Technical.c",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Technical.c",
               "RelativeDocumentMoniker": "CollisionTesting\\Technical.c",
@@ -133,8 +131,7 @@
               "RelativeToolTip": "CollisionTesting\\Technical.c",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAHQAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-07-03T23:07:17.204Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-03T23:07:17.204Z"
             },
             {
               "$type": "Document",
@@ -150,7 +147,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Entity.h",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Entity.h",
               "RelativeDocumentMoniker": "CollisionTesting\\Entity.h",
@@ -162,7 +159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "BasicEnemy.c",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\BasicEnemy.c",
               "RelativeDocumentMoniker": "CollisionTesting\\BasicEnemy.c",
@@ -174,26 +171,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Player.h",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Player.h",
               "RelativeDocumentMoniker": "CollisionTesting\\Player.h",
               "ToolTip": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Player.h",
               "RelativeToolTip": "CollisionTesting\\Player.h",
-              "ViewState": "AQIAAAcAAAAAAAAAAADwvxAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-06-23T12:17:43.792Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Player.c",
               "DocumentMoniker": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Player.c",
               "RelativeDocumentMoniker": "CollisionTesting\\Player.c",
               "ToolTip": "E:\\C\u002B\u002B projects\\CollisionTesting\\CollisionTesting\\Player.c",
               "RelativeToolTip": "CollisionTesting\\Player.c",
-              "ViewState": "AQIAAFAAAAAAAAAAAAArwLIAAAAAAAAA",
+              "ViewState": "AQIAAFMAAAAAAAAAAAArwGUAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2024-06-23T12:22:58.499Z",
               "EditorCaption": ""

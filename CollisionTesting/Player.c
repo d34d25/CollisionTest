@@ -2,7 +2,7 @@
 
 struct Entity playerEntity = { 0 };
 
-Camera2D camera = { 0 };
+Camera2D player_camera = { 0 };
 maxCameraX = 0;
 maxCameraY = 0;
 
@@ -97,9 +97,9 @@ void MovePlayer(int GRAVITY)
 
 void Set2DCamera(int rows, int cols, int tile_size)
 {
-    camera.target = (Vector2){ playerEntity.position.x + playerEntity.width / 2, playerEntity.position.y + playerEntity.height / 2 };
-    camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
+    player_camera.target = (Vector2){ playerEntity.position.x + playerEntity.width / 2, playerEntity.position.y + playerEntity.height / 2 };
+    player_camera.rotation = 0.0f;
+    player_camera.zoom = 1.0f;
 
     maxCameraX = cols * tile_size - GetScreenWidth() / 2.0f;
     maxCameraY = rows * tile_size - GetScreenHeight() / 2.0f;
@@ -110,7 +110,7 @@ void Update2DCamera(int screenW, int screenH, int tile_size)
     float halfScreenW = screenW / 2.0f;
     float halfScreenH = screenH / 2.0f;
 
-    camera.offset = (Vector2){ halfScreenW, halfScreenH };
+    player_camera.offset = (Vector2){ halfScreenW, halfScreenH };
 
     //camera.target.x = playerEntity.position.x + playerEntity.width  / 2;
     //camera.target.y = playerEntity.position.y + playerEntity.height / 2;
@@ -124,48 +124,48 @@ void Update2DCamera(int screenW, int screenH, int tile_size)
     float deadZoneBottom = playerEntity.position.y + playerEntity.height + deadZoneH / 2.0f;
 
     // Ajustar el objetivo de la cámara solo si el jugador sale de la zona muerta
-    if (camera.target.x < deadZoneLeft)
+    if (player_camera.target.x < deadZoneLeft)
     {
-        camera.target.x = deadZoneLeft;
+        player_camera.target.x = deadZoneLeft;
     }
-    else if (camera.target.x > deadZoneRight)
+    else if (player_camera.target.x > deadZoneRight)
     {
-        camera.target.x = deadZoneRight;
-    }
-
-    if (camera.target.y < deadZoneTop)
-    {
-        camera.target.y = deadZoneTop;
-    }
-    else if (camera.target.y > deadZoneBottom)
-    {
-        camera.target.y = deadZoneBottom;
+        player_camera.target.x = deadZoneRight;
     }
 
-
-
-    if (camera.target.x < halfScreenW)
+    if (player_camera.target.y < deadZoneTop)
     {
-        camera.target.x = halfScreenW;
+        player_camera.target.y = deadZoneTop;
     }
-    else if (camera.target.x > maxCameraX)
+    else if (player_camera.target.y > deadZoneBottom)
     {
-        camera.target.x = maxCameraX;
+        player_camera.target.y = deadZoneBottom;
     }
 
-    if (camera.target.y < halfScreenH)
+
+
+    if (player_camera.target.x < halfScreenW)
     {
-        camera.target.y = halfScreenH;
+        player_camera.target.x = halfScreenW;
     }
-    else if (camera.target.y > maxCameraY)
+    else if (player_camera.target.x > maxCameraX)
     {
-        camera.target.y = maxCameraY;
+        player_camera.target.x = maxCameraX;
     }
 
-    cam_left = (camera.target.x - halfScreenW) / tile_size;
-    cam_right = (camera.target.x + halfScreenW) / tile_size;
-    cam_top = (camera.target.y - halfScreenH) / tile_size;
-    cam_bottom = (camera.target.y + halfScreenH) / tile_size;
+    if (player_camera.target.y < halfScreenH)
+    {
+        player_camera.target.y = halfScreenH;
+    }
+    else if (player_camera.target.y > maxCameraY)
+    {
+        player_camera.target.y = maxCameraY;
+    }
+
+    cam_left = (player_camera.target.x - halfScreenW) / tile_size;
+    cam_right = (player_camera.target.x + halfScreenW) / tile_size;
+    cam_top = (player_camera.target.y - halfScreenH) / tile_size;
+    cam_bottom = (player_camera.target.y + halfScreenH) / tile_size;
 }
 
 

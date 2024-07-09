@@ -11,7 +11,7 @@
 
 extern struct Entity playerEntity;
 
-Camera2D camera;
+Camera2D player_camera;
 
 extern int maxCameraX, maxCameraY, cam_left, cam_right, cam_top, cam_bottom;
 

@@ -79,7 +79,7 @@ int main()
         if (!playerEntity.isDead)
         {
             SelectBlock();
-            MapMod(&playerEntity, camera, playerEntity.no_clip);
+            MapMod(&playerEntity, player_camera, playerEntity.no_clip);
 
             MovePlayer(GRAVITY); // move first
 
@@ -162,7 +162,7 @@ int main()
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        BeginMode2D(camera);
+        BeginMode2D(player_camera);
 
         ClearBackground(SKYBLUE);
 
@@ -200,6 +200,17 @@ int main()
         DrawFPS(screenWidth - 100, 0);
         DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 120, 20, WHITE);
         DrawText(TextFormat("HP: %d", playerEntity.health), 10, 140, 20, WHITE);
+
+        DrawText("V -> No clip", screenWidth - 15 * tileSize, 10, 20, WHITE);
+        DrawText("W -> UP (while no clipping)", screenWidth - 15 * tileSize, 30, 20, WHITE);
+        DrawText("S -> DOWN (while no clipping)", screenWidth - 15 * tileSize, 50, 20, WHITE);
+        DrawText("A -> LEFT ", screenWidth - 15 * tileSize, 70, 20, WHITE);
+        DrawText("D -> RIGHT ", screenWidth - 15 * tileSize, 90, 20, WHITE);
+        DrawText("SPACE -> JUMP ", screenWidth - 15 * tileSize, 110, 20, WHITE);
+        DrawText("LEFT CLICK -> DESTROY BLOCK ", screenWidth - 15 * tileSize, 130, 20, WHITE);
+        DrawText("RIGHT CLICK -> PLACE BLOCK", screenWidth - 15 * tileSize, 150, 20, WHITE);
+        DrawText("F5 -> SAVE MAP ", screenWidth - 15 * tileSize, 170, 20, WHITE);
+        DrawText("F9 -> LOAD LAST MAP ", screenWidth - 15 * tileSize, 190, 20, WHITE);
 
         if (playerEntity.isDead)
         {
