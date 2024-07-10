@@ -68,7 +68,7 @@ int main()
         }
 
         //----------------------------------------------------------------------------------   
-        Update2DCamera(screenWidth, screenHeight, tileSize);
+        Update2DCamera(screenWidth, screenHeight, tileSize, ROWS, COL);
         
         ResetCollisionDetections(&playerEntity);
         ResetCollisionDetections(&enemyEntity);
@@ -87,7 +87,7 @@ int main()
 
             CheckCollisions(&playerEntity); //then check
 
-            CheckCollisionWithEnemies(&playerEntity, &enemyEntity); //then check
+            //CheckCollisionWithEnemies(&playerEntity, &enemyEntity); //then check
 
             ResolveCollisions(&playerEntity); //then resolve after checking
 
@@ -135,6 +135,23 @@ int main()
             else
             {
                 playerEntity.entityColor.a = 0;
+            }
+        }
+
+        if (IsKeyDown(KEY_UP))
+        {
+            player_camera.zoom += 0.01f;
+            if (player_camera.zoom > 2)
+            {
+                player_camera.zoom = 2;
+            }
+        }
+        else if (IsKeyDown(KEY_DOWN))
+        {
+            player_camera.zoom -= 0.01f;
+            if (player_camera.zoom < 0.5)
+            {
+                player_camera.zoom = 0.5;
             }
         }
 
@@ -190,7 +207,7 @@ int main()
         EndMode2D();
 
         DrawText(TextFormat("Current Index: %d", current_index), 10, 10, 20, WHITE);
-        DrawText(TextFormat(" %s", color_names[current_index]), 10, 40, 20, WHITE);
+        DrawText(TextFormat(" %s", block_color_names[current_index]), 10, 40, 20, WHITE);
 
         DrawText(TextFormat("player_x: %d", (int) playerEntity.position.x/tileSize), 10, 60, 20, WHITE);
         DrawText(TextFormat("player_y: %d", (int) playerEntity.position.y/tileSize), 10, 80, 20, WHITE);
@@ -200,8 +217,9 @@ int main()
         DrawFPS(screenWidth - 100, 0);
         DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 120, 20, WHITE);
         DrawText(TextFormat("HP: %d", playerEntity.health), 10, 140, 20, WHITE);
+        DrawText(TextFormat("ZOOM %.2f",player_camera.zoom), 10, 160, 20, WHITE);
 
-        DrawText("V -> No clip", screenWidth - 15 * tileSize, 10, 20, WHITE);
+        DrawText("V -> NO CLIP", screenWidth - 15 * tileSize, 10, 20, WHITE);
         DrawText("W -> UP (while no clipping)", screenWidth - 15 * tileSize, 30, 20, WHITE);
         DrawText("S -> DOWN (while no clipping)", screenWidth - 15 * tileSize, 50, 20, WHITE);
         DrawText("A -> LEFT ", screenWidth - 15 * tileSize, 70, 20, WHITE);
@@ -245,3 +263,19 @@ int main()
 */
 
 
+/*
+* para imprimir una variable numérica hay que especificar el tipo de variable que se está imprimiendo
+* para que ésta aparezca correctamente en pantalla, antes de la variable a imprimir se agrega entre ""
+* los siguientes identificadores:
+* 
+%d --> int
+%f --> float
+%lf --> double
+%u --> unsigned
+%ld -->long
+%lld --> long long
+
+Ejemplo:
+        DrawText(TextFormat("HP: %d", playerEntity.health), 10, 140, 20, WHITE); //se imprime un int
+        DrawText(TextFormat("ZOOM %.2f",player_camera.zoom), 10, 160, 20, WHITE); // se imprime un float
+*/

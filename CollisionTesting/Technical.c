@@ -20,7 +20,7 @@ void CheckCollisions(struct Entity* entity)
 
                 if (i >= 0 && i < ROWS && j >= 0 && j < COL)
                 {
-                    if (map[i][j] != 0) {
+                    if (map[i][j] > 0 && map[i][j] < 20) {
                         if (entity->position.x + entity->velocity.x + entity->width > map_x &&
                             entity->position.x + entity->velocity.x < map_x + tileSize &&
                             entity->position.y + entity->height > map_y &&
@@ -123,7 +123,7 @@ void CheckForObstacles(struct Entity* entity)
 
             if (i >= 0 && i < ROWS && j >= 0 && j < COL)
             {
-                if (map[i][j] != 0) {
+                if (map[i][j] > 0 && map[i][j] < 20) {
                     if (entity->position.x + entity->velocity.x * 2 + entity->width > map_x &&
                         entity->position.x + entity->velocity.x * 2 < map_x + tileSize &&
                         entity->position.y + entity->height > map_y &&

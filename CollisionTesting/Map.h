@@ -6,10 +6,11 @@
 #include "raylib.h"
 
 
-#define BLOCK_COUNT 20
+#define BLOCK_COUNT 22
 
 extern struct Color block_list[BLOCK_COUNT];
-extern const char* color_names[BLOCK_COUNT];
+
+extern const char* block_color_names[BLOCK_COUNT];
 
 extern int current_index;
 

@@ -97,23 +97,23 @@ void MovePlayer(int GRAVITY)
 
 void Set2DCamera(int rows, int cols, int tile_size)
 {
-    player_camera.target = (Vector2){ playerEntity.position.x + playerEntity.width / 2, playerEntity.position.y + playerEntity.height / 2 };
-    player_camera.rotation = 0.0f;
     player_camera.zoom = 1.0f;
+    player_camera.target = (Vector2){ (playerEntity.position.x + playerEntity.width / 2) , (playerEntity.position.y + playerEntity.height / 2) };
+    player_camera.rotation = 0.0f;
 
-    maxCameraX = cols * tile_size - GetScreenWidth() / 2.0f;
-    maxCameraY = rows * tile_size - GetScreenHeight() / 2.0f;
+    maxCameraX = cols * tile_size - GetScreenWidth() / player_camera.zoom / 2.0f;
+    maxCameraY = rows * tile_size - GetScreenHeight() / player_camera.zoom / 2.0f;
 }
 
-void Update2DCamera(int screenW, int screenH, int tile_size)
+void Update2DCamera(int screenW, int screenH, int tile_size, int rows, int cols)
 {
+    maxCameraX = cols * tile_size - GetScreenWidth() / player_camera.zoom / 2.0f ;
+    maxCameraY = rows * tile_size - GetScreenHeight() / player_camera.zoom / 2.0f ;
+
     float halfScreenW = screenW / 2.0f;
     float halfScreenH = screenH / 2.0f;
 
     player_camera.offset = (Vector2){ halfScreenW, halfScreenH };
-
-    //camera.target.x = playerEntity.position.x + playerEntity.width  / 2;
-    //camera.target.y = playerEntity.position.y + playerEntity.height / 2;
 
     float deadZoneW = 10.0f * tile_size; // Ancho de la zona muerta
     float deadZoneH = 10.0f * tile_size; // Alto de la zona muerta
@@ -142,8 +142,6 @@ void Update2DCamera(int screenW, int screenH, int tile_size)
         player_camera.target.y = deadZoneBottom;
     }
 
-
-
     if (player_camera.target.x < halfScreenW)
     {
         player_camera.target.x = halfScreenW;
@@ -162,10 +160,11 @@ void Update2DCamera(int screenW, int screenH, int tile_size)
         player_camera.target.y = maxCameraY;
     }
 
-    cam_left = (player_camera.target.x - halfScreenW) / tile_size;
-    cam_right = (player_camera.target.x + halfScreenW) / tile_size;
-    cam_top = (player_camera.target.y - halfScreenH) / tile_size;
-    cam_bottom = (player_camera.target.y + halfScreenH) / tile_size;
+    cam_left = (player_camera.target.x - (GetScreenWidth() / player_camera.zoom / 2.0f)) / tile_size;
+    cam_right = (player_camera.target.x + (GetScreenWidth() / player_camera.zoom / 2.0f)) / tile_size;
+    cam_top = (player_camera.target.y - (GetScreenHeight() / player_camera.zoom / 2.0f)) / tile_size;
+    cam_bottom = (player_camera.target.y + (GetScreenHeight() / player_camera.zoom / 2.0f)) / tile_size;
+
 }
 
 

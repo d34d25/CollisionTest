@@ -10,7 +10,7 @@ int map[ROWS][COL];
 int tileSize = 25;
 int current_index = 1;
 
-const char* color_names[BLOCK_COUNT] = {
+const char* block_color_names[BLOCK_COUNT] = {
     "SKYBLUE",
     "DARKGREEN",
     "LIME",
@@ -30,8 +30,11 @@ const char* color_names[BLOCK_COUNT] = {
     "BLUE",
     "DARKBLUE",
     "BLACK",
-    "WHITE"
+    "WHITE",
+    "DARKGRAY WALL",
+    "DARKBROWN WALL"
 };
+
 
 void InitializeBlocks()
 {
@@ -56,29 +59,9 @@ void InitializeBlocks()
     block_list[18] = BLACK;
     block_list[19] = WHITE;
 
-    /*
-        SKY 0 
-        DARKGREEN 1
-        LIME 2
-        GREEN 3
-        GRAY 4
-        DARKGRAY 5
-        BEIGE 6
-        BROWN 7
-        DARKBROWN 8
-        YELLOW 9
-        GOLD 10
-        ORANGE 11
-        PURPLE 12
-        DARKPURPLE 13
-        RED 14
-        PINK 15
-        BLUE 16
-        DARKBLUE 17
-        BLACK 18
-        WHITE 19
-
-    */
+    //Walls
+    block_list[20] = (Color){ 50, 50, 50, 255 }; //dark gray wall
+    block_list[21] = (Color){  54, 41, 36, 255  }; //dark brown wall
 }
 
 
@@ -185,6 +168,12 @@ void MapMod(struct Entity* entity, Camera2D camera, bool noClipStatus)
                     map[mouse_tile_y][mouse_tile_x] = current_index;
                 }
             }
+            else if (current_index >= 20)
+            {
+                if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON) && map[mouse_tile_y][mouse_tile_x] == 0) {
+                    map[mouse_tile_y][mouse_tile_x] = current_index;
+                }
+            }
         }
         else
         {
@@ -195,9 +184,3 @@ void MapMod(struct Entity* entity, Camera2D camera, bool noClipStatus)
         
     }
 }
-
-
-//if (player_tile_y_top -2 >= 0 && player_tile_y_top -2 < ROWS)
-//{
-  //  if ((map[player_tile_x_left][player_tile_y_top - 2] == 0))
-    //{

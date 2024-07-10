@@ -23,7 +23,7 @@ void MovePlayer(int GRAVITY);
 
 void Set2DCamera(int rows, int cols, int tile_size);
 
-void Update2DCamera(int screenW, int screenH, int tile_size);
+void Update2DCamera(int screenW, int screenH, int tile_size, int rows, int col);
 
 void DrawPlayer();
 
