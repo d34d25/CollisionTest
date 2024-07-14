@@ -1,13 +1,9 @@
 #include<stdio.h>
 #include "raylib.h"
-
-
 #include "map.h"
 #include "Entity.h"
-
 #include "player.h"
 #include "BasicEnemy.h"
-
 #include "Technical.h"
 
 int main()
@@ -17,27 +13,33 @@ int main()
 
     int fps_index = 1;
 
+    Color hp_text_color = WHITE;
+
+    Color cooldown_text_color = WHITE;
+
     const int fps[FPS_COUNT] = {
         30,
         60,
         144
     };
 
-    const int screenWidth = 1200;
-    const int screenHeight = 800;
+    //const int screenWidth = 1200;
+    //const int screenHeight = 800;
 
     bool v_key_pressed = false;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitWindow(GetScreenWidth(), GetScreenHeight(), "raylib [core] example - basic window");
     
     InitializeBlocks();
+
+    ToggleFullscreen();
 
     //map generation
     MapGen();
 
     //player initialization
     
-    InitPlayer(tileSize, ROWS, COL);
+    InitPlayer(tileSize);
 
     Set2DCamera(ROWS, COL, tileSize);
 
@@ -66,9 +68,10 @@ int main()
             
             SetTargetFPS(fps[fps_index]);
         }
+        
 
         //----------------------------------------------------------------------------------   
-        Update2DCamera(screenWidth, screenHeight, tileSize, ROWS, COL);
+        Update2DCamera(GetScreenWidth(), GetScreenHeight(), tileSize, ROWS, COL);
         
         ResetCollisionDetections(&playerEntity);
         ResetCollisionDetections(&enemyEntity);
@@ -87,11 +90,14 @@ int main()
 
             CheckCollisions(&playerEntity); //then check
 
-            //CheckCollisionWithEnemies(&playerEntity, &enemyEntity); //then check
-
             ResolveCollisions(&playerEntity); //then resolve after checking
 
-            ResolveCollisionsWithEnemies(&playerEntity, &enemyEntity); //then resolve after checking
+            if (!player_sliding)
+            {
+                CheckCollisionWithEnemies(&playerEntity, &enemyEntity); //then check
+
+                ResolveCollisionsWithEnemies(&playerEntity, &enemyEntity); //then resolve after checking
+            }
 
             UpdateEntity(&playerEntity); //and after all that update the position
 
@@ -103,6 +109,11 @@ int main()
             if (IsKeyPressed(KEY_F9))
             {
                 LoadMap();
+            }
+
+            if (IsKeyPressed(KEY_F3))
+            {
+                ClearMap();
             }
 
             if (IsKeyPressed(KEY_V) && !v_key_pressed)
@@ -206,33 +217,67 @@ int main()
 
         EndMode2D();
 
+        //left side
         DrawText(TextFormat("Current Index: %d", current_index), 10, 10, 20, WHITE);
         DrawText(TextFormat(" %s", block_color_names[current_index]), 10, 40, 20, WHITE);
 
         DrawText(TextFormat("player_x: %d", (int) playerEntity.position.x/tileSize), 10, 60, 20, WHITE);
         DrawText(TextFormat("player_y: %d", (int) playerEntity.position.y/tileSize), 10, 80, 20, WHITE);
 
-        DrawText(TextFormat("player_y_vel: %d", (int)playerEntity.velocity.y), 10, 100, 20, WHITE);
+        DrawText(TextFormat("player_y_vel: %d", (int)playerEntity.velocity.x), 10, 100, 20, WHITE);
+        DrawText(TextFormat("player_y_vel: %d", (int)playerEntity.velocity.y), 10, 120, 20, WHITE);
 
-        DrawFPS(screenWidth - 100, 0);
-        DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 120, 20, WHITE);
-        DrawText(TextFormat("HP: %d", playerEntity.health), 10, 140, 20, WHITE);
-        DrawText(TextFormat("ZOOM %.2f",player_camera.zoom), 10, 160, 20, WHITE);
+        DrawFPS(GetScreenWidth() - 100, 0);
+        DrawText(TextFormat("Max fps: %d", fps[fps_index]), 10, 140, 20, WHITE);
 
-        DrawText("V -> NO CLIP", screenWidth - 15 * tileSize, 10, 20, WHITE);
-        DrawText("W -> UP (while no clipping)", screenWidth - 15 * tileSize, 30, 20, WHITE);
-        DrawText("S -> DOWN (while no clipping)", screenWidth - 15 * tileSize, 50, 20, WHITE);
-        DrawText("A -> LEFT ", screenWidth - 15 * tileSize, 70, 20, WHITE);
-        DrawText("D -> RIGHT ", screenWidth - 15 * tileSize, 90, 20, WHITE);
-        DrawText("SPACE -> JUMP ", screenWidth - 15 * tileSize, 110, 20, WHITE);
-        DrawText("LEFT CLICK -> DESTROY BLOCK ", screenWidth - 15 * tileSize, 130, 20, WHITE);
-        DrawText("RIGHT CLICK -> PLACE BLOCK", screenWidth - 15 * tileSize, 150, 20, WHITE);
-        DrawText("F5 -> SAVE MAP ", screenWidth - 15 * tileSize, 170, 20, WHITE);
-        DrawText("F9 -> LOAD LAST MAP ", screenWidth - 15 * tileSize, 190, 20, WHITE);
+        DrawText(TextFormat("ZOOM %.2f", player_camera.zoom), 10, 160, 20, WHITE);
 
+        if (playerEntity.health >= 80)
+        {
+            hp_text_color = GREEN;
+        }
+        else if (playerEntity.health >= 30)
+        {
+            hp_text_color = ORANGE;
+        }
+        else
+        {
+            hp_text_color = RED;
+        }
+
+        DrawText(TextFormat("HP: %d", playerEntity.health), 10, 180, 20, hp_text_color);
+
+        if (slide_cooldown != 0)
+        {
+            cooldown_text_color = RED;
+        }
+        else
+        {
+            cooldown_text_color = GREEN;
+        }
+
+        DrawText(TextFormat("DASH COOLDOWN %d", slide_cooldown), 10, 200, 20, cooldown_text_color);
+
+
+        //right side
+        DrawText("V -> NO CLIP", GetScreenWidth() - 15 * tileSize, 10, 20, WHITE);
+        DrawText("W -> UP (while no clipping)", GetScreenWidth() - 15 * tileSize, 30, 20, WHITE);
+        DrawText("S -> DOWN (while no clipping)", GetScreenWidth() - 15 * tileSize, 50, 20, WHITE);
+        DrawText("A -> LEFT ", GetScreenWidth() - 15 * tileSize, 70, 20, WHITE);
+        DrawText("D -> RIGHT ", GetScreenWidth() - 15 * tileSize, 90, 20, WHITE);
+        DrawText("SPACE -> JUMP ", GetScreenWidth() - 15 * tileSize, 110, 20, WHITE);
+        DrawText("L_SHIFT -> DASH ", GetScreenWidth() - 15 * tileSize, 130, 20, WHITE);
+        DrawText("LEFT CLICK -> DESTROY BLOCK ", GetScreenWidth() - 15 * tileSize, 150, 20, WHITE);
+        DrawText("RIGHT CLICK -> PLACE BLOCK", GetScreenWidth() - 15 * tileSize, 170, 20, WHITE);
+        DrawText("F5 -> SAVE MAP ", GetScreenWidth() - 15 * tileSize, 190, 20, WHITE);
+        DrawText("F9 -> LOAD LAST MAP ", GetScreenWidth() - 15 * tileSize, 210, 20, WHITE);
+        DrawText("F3 -> CLEAR MAP ", GetScreenWidth() - 15 * tileSize, 230, 20, WHITE);
+        DrawText("ESC -> EXIT ", GetScreenWidth() - 15 * tileSize, 250, 20, WHITE);
+
+        //center
         if (playerEntity.isDead)
         {
-            DrawText(TextFormat("u r ded lol"), screenWidth / 2, 120, 20, WHITE);
+            DrawText(TextFormat("u r ded lol"), GetScreenWidth() / 2, 120, 20, WHITE);
         }
 
         EndDrawing();
@@ -249,8 +294,8 @@ int main()
 
 
 
-/*Estructura para una correcta detección y resolución de colisiones :
-    
+/*Estructura para una correcta detección y resolución de colisiones 
+:
     resetearDeteccionDeColisiones();
 
     moverJugador();

@@ -30,6 +30,8 @@ void InitEnemy(int tileSize, int ROWS, int COL)
 
     enemyEntity.collision_with_entity = false;
 
+    enemyEntity.collision_tile_x = 0;
+
     enemyEntity.collision_tile_y = 0;
 
     enemyEntity.no_clip = false;

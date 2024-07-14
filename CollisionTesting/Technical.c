@@ -11,9 +11,9 @@ void CheckCollisions(struct Entity* entity)
 {
     if (!entity->no_clip)
     {
-        for (int i = cam_top; i <= cam_bottom; i++)
+        for (int i = 0; i <= ROWS; i++)
         {
-            for (int j = cam_left; j <= cam_right; j++)
+            for (int j = 0; j <= COL; j++)
             {
                 int map_x = j * tileSize;
                 int map_y = i * tileSize;
@@ -27,6 +27,7 @@ void CheckCollisions(struct Entity* entity)
                             entity->position.y < map_y + tileSize)
                         {
                             entity->collision_x_detected = true;
+                            entity->collision_tile_x = map_x;
                         }
 
                         if (entity->position.x + entity->width > map_x &&
@@ -73,7 +74,20 @@ void ResolveCollisions(struct Entity* entity)
 {
     if (entity->collision_x_detected)
     {
-        entity->velocity.x = 0;
+        if (entity->velocity.x > 10)
+        {
+            entity->velocity.x = 0;
+            entity->position.x = entity->collision_tile_x - tileSize;
+        }
+        else if (entity->velocity.x < -10)
+        {
+            entity->velocity.x = 0;
+            entity->position.x = entity->collision_tile_x + tileSize;
+        }
+        else
+        {
+            entity->velocity.x = 0;
+        }
     }
 
     if (entity->collision_with_frame_x)
@@ -88,11 +102,13 @@ void ResolveCollisions(struct Entity* entity)
             entity->can_jump = true;
             entity->velocity.y = 0;
             entity->position.y = entity->collision_tile_y - entity->height;
+
         }
         else if (entity->velocity.y < 0)
         {
             entity->velocity.y = 0;
             entity->position.y = entity->collision_tile_y + tileSize;
+
         }
     }
 
@@ -146,6 +162,90 @@ void JumpObstacles(struct Entity* entity)
     }
 }
 
+
+
+void CheckCollisionWithEnemies(struct Entity* entity, struct Entity* entity_e)
+{
+    if (!entity->no_clip)
+    {
+        Rectangle hit_box_p = { entity->position.x, entity->position.y, entity->width,entity->height };
+        Rectangle hit_box_e = { entity_e->position.x, entity_e->position.y, entity_e->width,entity_e->height };
+
+        if (CheckCollisionRecs(hit_box_p, hit_box_e))
+        {
+            entity->collision_with_entity = true;
+        }
+    }
+   
+}
+
+void ApplyForceOverTime(float* entity_velocity, int force, int* timer, int time, bool condition, bool sub_condition)
+{
+    //when sub_condition is false the force applied will inverse
+    if (!condition && *timer > 0)
+    {
+        (*timer)--;
+        if (*timer < 0)
+        {
+            *timer = 0;
+        }
+    }
+
+    if (condition || *timer > 0)
+    {
+        if (*timer == 0)
+        {
+            *timer = time;
+
+            if (sub_condition)
+            {
+                *entity_velocity += force;
+            }
+            else
+            {
+                *entity_velocity -= force;
+            }
+        }
+        else if (*timer > 0)
+        {
+            if (sub_condition)
+            {
+                *entity_velocity += force;
+            }
+            else
+            {
+                *entity_velocity -= force;
+            }
+        }
+    }
+}
+
+
+
+
+void ResolveCollisionsWithEnemies(struct Entity* entity, struct Entity* entity_e)
+{
+
+    if (entity->health <= 0)
+    {
+        entity->isDead = true;
+        return;
+    }
+
+
+    bool isEnemyOnTheLeft = entity->position.x > entity_e->position.x;
+
+    ApplyForceOverTime(&entity->velocity.x, 10, &entity->knockback_duration, 25, entity->collision_with_entity, isEnemyOnTheLeft);
+
+    if (entity->collision_with_entity)
+    {
+        entity->velocity.y = -GRAVITY - 10;
+        entity->can_jump = false;
+        entity->health = entity->health - 20;
+    }
+}
+
+
 void SaveMap(int current_map[ROWS][COL])
 {
     FILE* fp;
@@ -169,92 +269,6 @@ void SaveMap(int current_map[ROWS][COL])
     printf("Map saved successfully in map.txt.\n");
 }
 
-void CheckCollisionWithEnemies(struct Entity* entity, struct Entity* entity_e)
-{
-    if (!entity->no_clip)
-    {
-        Rectangle hit_box_p = { entity->position.x, entity->position.y, entity->width,entity->height };
-        Rectangle hit_box_e = { entity_e->position.x, entity_e->position.y, entity_e->width,entity_e->height };
-
-        if (CheckCollisionRecs(hit_box_p, hit_box_e))
-        {
-            entity->collision_with_entity = true;
-        }
-    }
-   
-}
-
-
-
-void ResolveCollisionsWithEnemies(struct Entity* entity, struct Entity* entity_e)
-{
-    int knockback = 5;
-    int knockbackForce_X = knockback;
-
-    if (entity->health <= 0)
-    {
-        entity->isDead = true;
-        return;
-    }
-
-    if (!entity->collision_with_entity && entity->knockback_duration > 0)
-    {
-        entity->knockback_duration--;
-        if (entity->knockback_duration < 0)
-        {
-            entity->knockback_duration = 0;
-        }
-    }
-
-
-    if (entity->collision_with_entity && !entity->collision_x_detected || entity->knockback_duration > 0 && !entity->collision_x_detected)
-    {
-        if (entity->knockback_duration == 0)
-        {
-            entity->knockback_duration = 50;
-
-            if (entity->position.x < entity_e->position.x)
-            {
-                knockbackForce_X = -knockback;
-            }
-            else
-            {  
-                knockbackForce_X = knockback;
-            }
-
-            entity->velocity.x = knockbackForce_X;
-        }
-
-        else if (entity->knockback_duration > 0 && !entity->collision_x_detected)
-        {
-            if (entity->position.x < entity_e->position.x)
-            {  
-                knockbackForce_X = -knockback;
-            }
-            else
-            {
-                knockbackForce_X = knockback;
-            }
-
-            entity->velocity.x = knockbackForce_X;
-           
-            entity->knockback_duration--;
-        }
-    }
-
-    if (entity->collision_with_entity && !entity->collision_x_detected)
-    {
-        entity->velocity.y = -GRAVITY - knockback * 2;
-        entity->can_jump = false;
-
-        entity->health = entity->health - 20;
-
-    }
-}
-
-
-
-
 
 void LoadMap()
 {
@@ -277,4 +291,11 @@ void LoadMap()
     fclose(fp); // Close the file
     printf("Map loaded successfully from map.txt.\n");
 
+}
+
+
+
+void ClearMap()
+{
+    MapGen();
 }

@@ -22,10 +22,13 @@ void CheckCollisionWithEnemies(struct Entity* entity, struct Entity* entity_e);
 
 void ResolveCollisionsWithEnemies(struct Entity* entity_p, struct Entity* entity_e);
 
+void ApplyForceOverTime(float* entity_velocity, int force, int* timer, int time, bool condition, bool sub_condition);
 
 void SaveMap(int current_map[ROWS][COL]);
 
 void LoadMap();
+
+void ClearMap();
 
 
 #endif

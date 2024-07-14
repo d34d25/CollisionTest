@@ -7,6 +7,7 @@
 
 #include "raylib.h"
 #include "Entity.h"
+#include "Technical.h"
 
 
 extern struct Entity playerEntity;
@@ -15,7 +16,11 @@ Camera2D player_camera;
 
 extern int maxCameraX, maxCameraY, cam_left, cam_right, cam_top, cam_bottom;
 
-void InitPlayer(int tileSize, int rows, int col);
+int player_slide_timer, slide_cooldown;
+
+bool player_sliding;
+
+void InitPlayer(int tileSize);
 
 void ResetPlayerCollisionDetection();
 

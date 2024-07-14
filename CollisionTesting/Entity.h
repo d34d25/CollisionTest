@@ -12,7 +12,7 @@ struct Entity
 
 	int width, height;
 
-	int collision_tile_y;
+	int collision_tile_x, collision_tile_y;
 
 	int health, knockback_duration;
 

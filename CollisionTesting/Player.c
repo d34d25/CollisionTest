@@ -11,7 +11,10 @@ cam_right = 0;
 cam_top = 0;
 cam_bottom = 0;
 
-void InitPlayer(int tileSize, int ROWS, int COL)
+bool facing_right = true;
+bool facing_left = false;
+
+void InitPlayer(int tileSize)
 {
     playerEntity.width = tileSize; playerEntity.height = 35;
 
@@ -31,6 +34,8 @@ void InitPlayer(int tileSize, int ROWS, int COL)
 
     playerEntity.collision_with_entity = false;
 
+    playerEntity.collision_tile_x = 0;
+
     playerEntity.collision_tile_y = 0;
 
     playerEntity.entityColor = RED;
@@ -42,6 +47,10 @@ void InitPlayer(int tileSize, int ROWS, int COL)
     playerEntity.health = 100;
 
     playerEntity.knockback_duration = 0;
+
+    player_slide_timer = 0;
+
+    slide_cooldown = 0;
 }
 
 void ResetPlayerCollisionDetection()
@@ -54,13 +63,19 @@ void ResetPlayerCollisionDetection()
 
 void MovePlayer(int GRAVITY)
 {
+    int max_cooldown = 60;
+
     if (IsKeyDown(KEY_D))
     {
         playerEntity.velocity.x = 5;
+        facing_right = true;
+        facing_left = false;
     }
     else if (IsKeyDown(KEY_A))
     {
         playerEntity.velocity.x = -5;
+        facing_right = false;
+        facing_left = true;
     }
     else
     {
@@ -91,6 +106,27 @@ void MovePlayer(int GRAVITY)
         }
     }
 
+    if (slide_cooldown == 0)
+    {
+        if (IsKeyPressed(KEY_LEFT_SHIFT))
+        {
+            player_sliding = true;
+            slide_cooldown = max_cooldown;
+        }
+    }
+    else if (slide_cooldown < max_cooldown - max_cooldown * 0.3)
+    {
+        player_sliding = false;
+    }
+
+    
+    slide_cooldown--;
+    if (slide_cooldown < 0)
+    {
+        slide_cooldown = 0;
+    }
+
+    ApplyForceOverTime(&playerEntity.velocity.x, 10, &player_slide_timer, 10, player_sliding, facing_right);
     
 }
 
