@@ -32,7 +32,7 @@ int main()
     
     InitializeBlocks();
 
-    ToggleFullscreen();
+    ToggleBorderlessWindowed();
 
     //map generation
     MapGen();
@@ -92,7 +92,7 @@ int main()
 
             ResolveCollisions(&playerEntity); //then resolve after checking
 
-            if (!player_sliding)
+            if (player_slide_timer == 0)
             {
                 CheckCollisionWithEnemies(&playerEntity, &enemyEntity); //then check
 
@@ -185,6 +185,11 @@ int main()
 
         UpdateEntity(&enemyEntity);
 
+
+        if (IsKeyPressed(KEY_F11))
+        {
+            ToggleBorderlessWindowed();
+        }
 
         // Draw
         //----------------------------------------------------------------------------------

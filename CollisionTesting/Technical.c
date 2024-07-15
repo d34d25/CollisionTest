@@ -199,22 +199,22 @@ void ApplyForceOverTime(float* entity_velocity, int force, int* timer, int time,
 
             if (sub_condition)
             {
-                *entity_velocity += force;
+                *entity_velocity = force;
             }
             else
             {
-                *entity_velocity -= force;
+                *entity_velocity = -force;
             }
         }
         else if (*timer > 0)
         {
             if (sub_condition)
             {
-                *entity_velocity += force;
+                *entity_velocity = force;
             }
             else
             {
-                *entity_velocity -= force;
+                *entity_velocity = -force;
             }
         }
     }
@@ -232,10 +232,7 @@ void ResolveCollisionsWithEnemies(struct Entity* entity, struct Entity* entity_e
         return;
     }
 
-
     bool isEnemyOnTheLeft = entity->position.x > entity_e->position.x;
-
-    ApplyForceOverTime(&entity->velocity.x, 10, &entity->knockback_duration, 25, entity->collision_with_entity, isEnemyOnTheLeft);
 
     if (entity->collision_with_entity)
     {
@@ -243,6 +240,9 @@ void ResolveCollisionsWithEnemies(struct Entity* entity, struct Entity* entity_e
         entity->can_jump = false;
         entity->health = entity->health - 20;
     }
+
+    ApplyForceOverTime(&entity->velocity.x, 10, &entity->knockback_duration, 25, entity->collision_with_entity, isEnemyOnTheLeft);
+    
 }
 
 
